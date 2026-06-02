@@ -219,37 +219,56 @@ function App() {
 
         {/* 2. Hero Section (Restructured exact mockup hero) */}
         <section className="hero-wrapper">
-          {/* Wave/hand outline silhouette watermarks matching the screenshot mockup */}
-          <svg className="hero-hand-watermark" viewBox="0 0 100 100" fill="currentColor">
-            <path d="M10 80 Q20 30 30 25 Q35 22 40 30 Q45 40 40 50 Q55 20 62 20 Q68 20 68 30 Q68 45 55 58 Q75 25 80 30 Q85 35 78 52 Q90 38 95 44 Q98 50 85 68 L70 85 Z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          {/* Hand silhouette watermark behind text matching mockup exactly */}
+          <svg className="hero-hand-watermark" viewBox="0 0 120 120" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            {/* Outline hand with spread fingers pointing top-right */}
+            <path d="M20 90 Q30 45 40 40 Q44 38 48 44 Q50 50 44 60 Q55 35 62 33 Q66 31 68 38 Q68 46 56 58 Q72 32 78 32 Q83 32 83 40 Q80 50 68 64 Q82 38 88 42 Q92 46 82 62 C96 52 100 58 88 74 L75 92 L40 100 Z" />
           </svg>
-          <svg className="hero-shapes" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+
+          {/* Plant leaf-stem illustration bottom-left */}
+          <svg className="hero-leaf-branch" viewBox="0 0 100 150" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round">
+            <path d="M50 140 Q55 70 30 20" />
+            <path d="M48 110 Q25 90 28 102 Z" fill="currentColor" />
+            <path d="M52 100 Q75 80 72 92 Z" fill="currentColor" />
+            <path d="M45 75 Q20 60 25 70 Z" fill="currentColor" />
+            <path d="M51 65 Q70 50 67 60 Z" fill="currentColor" />
+            <path d="M41 40 Q25 30 28 36 Z" fill="currentColor" />
+            <path d="M44 32 Q60 22 57 28 Z" fill="currentColor" />
           </svg>
           
           <div className="hero-content">
-            {/* Hand-drawn heart outline badge top-left of header */}
-            <div style={{ display: 'flex', alignItems: 'flex-start', color: '#eab308' }}>
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                <circle cx="12" cy="11" r="2" fill="currentColor" />
+            {/* Yellow Sun-Heart outline badge top-left of header */}
+            <div style={{ display: 'flex', alignItems: 'flex-start', color: '#eab308', marginBottom: '-0.5rem' }}>
+              <svg width="60" height="60" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="4.5" strokeLinecap="round">
+                {/* Heart outline */}
+                <path d="M50 78 C30 58 20 42 20 30 C20 18 30 10 40 10 C46 10 50 14 50 14 C50 14 54 10 60 10 C70 10 80 18 80 30 C80 42 70 58 50 78 Z" strokeLinejoin="round" />
+                {/* Sunbeams around heart */}
+                <line x1="12" y1="18" x2="22" y2="24" />
+                <line x1="10" y1="36" x2="22" y2="36" />
+                <line x1="15" y1="55" x2="26" y2="50" />
+                <line x1="26" y1="70" x2="34" y2="62" />
+                <line x1="28" y1="10" x2="34" y2="18" />
               </svg>
             </div>
 
-            <h1>{t.hero.title}</h1>
+            <h1 style={{ whiteSpace: 'pre-line' }}>
+              {lang === 'nl' ? "Samen groeien,\nelke dag een beetje meer." : "Growing together,\na little more every day."}
+            </h1>
             <p>{t.hero.text}</p>
             
             <div className="hero-actions">
-              <button onClick={() => setShowTourModal(true)} className="btn btn-primary">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+              <button onClick={() => setShowTourModal(true)} className="btn btn-welcome">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
                   <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                 </svg>
                 {t.hero.ctaWelcome}
               </button>
-              <button onClick={() => setShowVideoModal(true)} className="btn btn-outline" style={{ background: '#ffffff' }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <polygon points="5,3 19,12 5,21" />
-                </svg>
+              <button onClick={() => setShowVideoModal(true)} className="btn btn-video">
+                <span className="btn-video-play-icon">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="6,4 20,12 6,20" />
+                  </svg>
+                </span>
                 {t.hero.ctaVideo}
               </button>
             </div>
@@ -261,6 +280,29 @@ function App() {
                 src={childrenImg} 
                 alt="Blij spelende kinderen basisschool Heilige Familie" 
               />
+            </div>
+            
+            {/* Custom schoolhouse badge overlay top-right */}
+            <div className="hero-badge-schoolhouse">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+            </div>
+
+            {/* Custom sun badge overlay bottom-right */}
+            <div className="hero-badge-sun">
+              <svg viewBox="0 0 100 100" width="52" height="52" fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round">
+                <circle cx="50" cy="50" r="20" />
+                <line x1="50" y1="10" x2="50" y2="20" />
+                <line x1="50" y1="80" x2="50" y2="90" />
+                <line x1="10" y1="50" x2="20" y2="50" />
+                <line x1="80" y1="50" x2="90" y2="50" />
+                <line x1="22" y1="22" x2="30" y2="30" />
+                <line x1="70" y1="70" x2="78" y2="78" />
+                <line x1="70" y1="30" x2="78" y2="22" />
+                <line x1="22" y1="78" x2="30" y2="70" />
+              </svg>
             </div>
           </div>
         </section>
