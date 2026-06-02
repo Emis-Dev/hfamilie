@@ -92,9 +92,9 @@ p {
 /* 3. Utility Layout Classes */
 .container {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1720px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 2rem;
 }
 
 /* Main Grid Layout */
@@ -198,8 +198,8 @@ p {
   top: 1rem;
   z-index: 200;
   margin: 0.5rem auto 2.5rem;
-  width: calc(100% - 2rem);
-  max-width: 1200px;
+  width: calc(100% - 4rem);
+  max-width: 1680px;
   border-radius: 100px;
   border: 1px solid rgba(255, 255, 255, 0.4);
   box-shadow: var(--shadow-sm);
@@ -210,7 +210,7 @@ p {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.6rem 1.5rem;
+  padding: 0.6rem 2.25rem;
   border-radius: 100px;
 }
 

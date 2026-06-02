@@ -387,7 +387,7 @@ function App() {
 
             </div>
 
-            <a href="https://maps.google.com/?q=Kloosterstraat+6,+9250+Waasmunster" target="_blank" rel="noopener noreferrer" className="bento-link">
+            <a href="https://maps.google.com/?q=Laaglandlei+20,+2900+Schoten" target="_blank" rel="noopener noreferrer" className="bento-link">
               {t.practical.moreInfo}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -541,19 +541,19 @@ function App() {
 
       {/* Footer Info Bottom */}
       <footer style={{ borderTop: '1px solid var(--color-border)', padding: '2rem 0', backgroundColor: '#ffffff', color: 'var(--color-text-muted)' }}>
-        <div className="container" style={{ display: 'flex', justifyContent: 'between', flexWrap: 'wrap', gap: '2rem' }}>
+        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '2rem' }}>
           <div>
             <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, color: 'var(--color-primary)' }}>HF Heilige Familie</span>
-            <p style={{ fontSize: '0.85rem', marginTop: '0.5rem' }}>© {new Date().getFullYear()} Basisschool Heilige Familie Waasmunster. Alle rechten voorbehouden.</p>
+            <p style={{ fontSize: '0.85rem', marginTop: '0.5rem' }}>© {new Date().getFullYear()} Basisschool Heilige Familie Schoten. Alle rechten voorbehouden.</p>
           </div>
           <div style={{ display: 'flex', gap: '2rem', fontSize: '0.85rem', marginLeft: 'auto' }}>
             <div>
               <strong>Adres:</strong>
-              <p style={{ fontSize: '0.85rem', marginTop: '0.2rem' }}>Kloosterstraat 6, 9250 Waasmunster</p>
+              <p style={{ fontSize: '0.85rem', marginTop: '0.2rem' }}>Laaglandlei 20, 2900 Schoten</p>
             </div>
             <div>
               <strong>Contact:</strong>
-              <p style={{ fontSize: '0.85rem', marginTop: '0.2rem' }}>Tel: +32 (0)9 348 12 34<br/>Email: info@hfamilie.be</p>
+              <p style={{ fontSize: '0.85rem', marginTop: '0.2rem' }}>Tel: +32 (0)3 658 51 95<br/>Email: basisschool@hfamilie.be</p>
             </div>
           </div>
         </div>
