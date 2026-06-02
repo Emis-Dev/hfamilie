@@ -85,6 +85,260 @@
           "role": "Zorgcoördinator",
           "quote": "Zorg op maat voor ieder kind, want elke kleine stap is er één van grote betekenis."
         }
+      ],
+      "allMembers": [
+        {
+          "id": "staff-1",
+          "name": "Dominique Bombey",
+          "role": "Administratief Directeur",
+          "class": "Directie",
+          "category": "directie",
+          "email": "dominique.bombey@hfamilie.be",
+          "quote": "Een goed georganiseerde school vormt de rustige basis waarin leerkrachten en kinderen kunnen schitteren."
+        },
+        {
+          "id": "staff-2",
+          "name": "Annemie Foulon",
+          "role": "Pedagogisch Directeur",
+          "class": "Directie",
+          "category": "directie",
+          "email": "annemie.foulon@hfamilie.be",
+          "quote": "Onze pedagogische visie stelt het kind centraal. Leren met hoofd, hart en handen is onze leidraad."
+        },
+        {
+          "id": "staff-3",
+          "name": "Juf Charis",
+          "role": "Kleuterjuf",
+          "class": "Konijnenklas (2,5 - 3 jaar)",
+          "category": "kleuter",
+          "email": "charis.hawinkel@hfamilie.be",
+          "quote": "Welkom kleine vriendjes! In de Konijnenklas zetten we samen de eerste grote stapjes in de schoolwereld."
+        },
+        {
+          "id": "staff-4",
+          "name": "Juf Hilde",
+          "role": "Kleuterjuf",
+          "class": "Vissenklas (3 jaar)",
+          "category": "kleuter",
+          "email": "hilde.vandervelde@hfamilie.be",
+          "quote": "Als visjes in het water zwemmen we samen door een jaar vol plezier, spel en verwondering."
+        },
+        {
+          "id": "staff-5",
+          "name": "Juf Sanne",
+          "role": "Kleuterjuf",
+          "class": "Bijenklas (4 jaar)",
+          "category": "kleuter",
+          "email": "sanne.belmans@hfamilie.be",
+          "quote": "We zoemen en vliegen vrolijk rond in onze klas, lerend van elkaar en bouwend aan onze talenten."
+        },
+        {
+          "id": "staff-6",
+          "name": "Juf Karen",
+          "role": "Kleuterjuf",
+          "class": "Eendenklas (4 - 5 jaar)",
+          "category": "kleuter",
+          "email": "karen.vandevijver@hfamilie.be",
+          "quote": "Spelend en ontdekkend leren staat centraal. Samen maken we er een spetterend jaar van!"
+        },
+        {
+          "id": "staff-7",
+          "name": "Juf Katrien",
+          "role": "Kleuterjuf & LO leerkracht",
+          "class": "Eendenklas & Beweging",
+          "category": "kleuter",
+          "email": "katrien.heylen@hfamilie.be",
+          "quote": "Bewegen is gezond en leuk! Ik help onze kleuters om hun motoriek spelenderwijs te ontwikkelen."
+        },
+        {
+          "id": "staff-8",
+          "name": "Juf Laura",
+          "role": "Kleuterjuf",
+          "class": "Berenklas (5 jaar)",
+          "category": "kleuter",
+          "email": "laura.laenen@hfamilie.be",
+          "quote": "In de Berenklas bereiden we onze oudste kleuters voor op de grote stap naar het eerste leerjaar."
+        },
+        {
+          "id": "staff-9",
+          "name": "Juf Lynn",
+          "role": "Kleuterjuf & Ondersteuning",
+          "class": "Berenklas & 1LA",
+          "category": "kleuter",
+          "email": "lynn.ceulemans@hfamilie.be",
+          "quote": "Ik zorg voor een zachte overgang tussen de kleuters en de lagere school door extra ondersteuning."
+        },
+        {
+          "id": "staff-10",
+          "name": "Juf Els",
+          "role": "Klasjuf 1e leerjaar",
+          "class": "Klas 1LA",
+          "category": "lager",
+          "email": "els.vandepeer@hfamilie.be",
+          "quote": "Leren lezen en schrijven is een magisch avontuur. Ik geniet elke dag van die blinkende oogjes!"
+        },
+        {
+          "id": "staff-11",
+          "name": "Juf Lotte B.",
+          "role": "Klasjuf 1e leerjaar",
+          "class": "Klas 1LB",
+          "category": "lager",
+          "email": "lotte.baplu@hfamilie.be",
+          "quote": "We leggen de basis voor levenslang leren. Met veel geduld en plezier bouwen we aan letters en cijfers."
+        },
+        {
+          "id": "staff-12",
+          "name": "Juf Eveline",
+          "role": "Klasjuf 2e leerjaar",
+          "class": "Klas 2LA",
+          "category": "lager",
+          "email": "eveline.claes@hfamilie.be",
+          "quote": "Tafels oefenen en vlotter lezen! In het tweede leerjaar zetten we de groeispurt stevig in."
+        },
+        {
+          "id": "staff-13",
+          "name": "Meester Alec",
+          "role": "Klasleerkracht 3e leerjaar",
+          "class": "Klas 3LA",
+          "category": "lager",
+          "email": "alec.geerts@hfamilie.be",
+          "quote": "Zelfstandigheid en samenwerking groeien hier elke dag. Fouten maken mag, want daar leer je van!"
+        },
+        {
+          "id": "staff-14",
+          "name": "Meester Koen",
+          "role": "Klasleerkracht 3e leerjaar",
+          "class": "Klas 3LB",
+          "category": "lager",
+          "email": "koen.jacobs@hfamilie.be",
+          "quote": "Een actieve klas waar nieuwsgierigheid wordt beloond. We gaan samen op onderzoek uit!"
+        },
+        {
+          "id": "staff-15",
+          "name": "Meester Arno",
+          "role": "Klasleerkracht 4e leerjaar",
+          "class": "Klas 4LA",
+          "category": "lager",
+          "email": "arno.coppens@hfamilie.be",
+          "quote": "Samen doelen bereiken. We maken van moeilijke leerstof een boeiende uitdaging."
+        },
+        {
+          "id": "staff-16",
+          "name": "Juf Evy",
+          "role": "Leerkracht 4e leerjaar",
+          "class": "Klas 4LA (Co-teaching)",
+          "category": "lager",
+          "email": "evy.hens@hfamilie.be",
+          "quote": "Twee leerkrachten zien meer dan één. Met co-teaching geven we elk kind de aandacht die het verdient."
+        },
+        {
+          "id": "staff-17",
+          "name": "Juf Lotte J.",
+          "role": "Klasjuf 4e leerjaar",
+          "class": "Klas 4LB",
+          "category": "lager",
+          "email": "lotte.janssens@hfamilie.be",
+          "quote": "Creativiteit en structuur gaan hand in hand. We maken er elke dag een leerrijk feestje van."
+        },
+        {
+          "id": "staff-18",
+          "name": "Juf Sandra",
+          "role": "Klasjuf 5e leerjaar",
+          "class": "Klas 5LA",
+          "category": "lager",
+          "email": "sandra.pottiez@hfamilie.be",
+          "quote": "In het vijfde leerjaar verleggen we grenzen en bereiden we ons langzaam voor op de grote stap naar het secundair."
+        },
+        {
+          "id": "staff-19",
+          "name": "Juf Elien",
+          "role": "Klasjuf 5e leerjaar",
+          "class": "Klas 5LB",
+          "category": "lager",
+          "email": "elien.vanloo@hfamilie.be",
+          "quote": "Frans leren spreken en grote getallen verwerken! We ondersteunen elkaar en groeien samen."
+        },
+        {
+          "id": "staff-20",
+          "name": "Juf Evie",
+          "role": "Leerkracht 5e leerjaar",
+          "class": "Klas 5LB (Co-teaching)",
+          "category": "lager",
+          "email": "evie.vanechelpoel@hfamilie.be",
+          "quote": "Elk kind leert anders. Door differentiatie en maatwerk betrekken we iedereen bij de les."
+        },
+        {
+          "id": "staff-21",
+          "name": "Juf Kathleen",
+          "role": "Klasjuf 6e leerjaar",
+          "class": "Klas 6LA",
+          "category": "lager",
+          "email": "kathleen.meutermans@hfamilie.be",
+          "quote": "Het laatste jaar op onze basisschool! We sluiten een mooie periode af en blikken vol vertrouwen vooruit."
+        },
+        {
+          "id": "staff-22",
+          "name": "Juf Lien B.",
+          "role": "Leerkracht 6e leerjaar",
+          "class": "Klas 6LA (Co-teaching)",
+          "category": "lager",
+          "email": "lien.braspenningx@hfamilie.be",
+          "quote": "De brug bouwen naar de middelbare school. We stimuleren kritisch denken en eigen verantwoordelijkheid."
+        },
+        {
+          "id": "staff-23",
+          "name": "Meester Gert",
+          "role": "Klasleerkracht 6e leerjaar",
+          "class": "Klas 6LB",
+          "category": "lager",
+          "email": "gert.maes@hfamilie.be",
+          "quote": "Klaar voor de sprong! In 6LB sluiten we de lagere schooltijd af met onvergetelijke herinneringen en een sterke basis."
+        },
+        {
+          "id": "staff-24",
+          "name": "Juf Katrien H.",
+          "role": "Leerkracht LO",
+          "class": "Lichamelijke Opvoeding",
+          "category": "zorg",
+          "email": "katrien.hofmans@hfamilie.be",
+          "quote": "Sport, spel en fairplay! We stimuleren de fysieke en sociale vaardigheden van al onze leerlingen."
+        },
+        {
+          "id": "staff-25",
+          "name": "Meester Roel",
+          "role": "Leerkracht LO",
+          "class": "Lichamelijke Opvoeding",
+          "category": "zorg",
+          "email": "roel.brand@hfamilie.be",
+          "quote": "Teamspirit en plezier in movement staan centraal tijdens mijn turn- en zwemlessen."
+        },
+        {
+          "id": "staff-26",
+          "name": "Heidi Van Grootel",
+          "role": "Zorg- & Ankerleerkracht",
+          "class": "Zorgcoördinatie",
+          "category": "zorg",
+          "email": "heidi.vangrootel@hfamilie.be",
+          "quote": "Zorgcoördinatie betekent luisteren, verbinden en ondersteunen waar het nodig is voor elk kind."
+        },
+        {
+          "id": "staff-27",
+          "name": "Hans Meyfroodt",
+          "role": "Zorgondersteuner",
+          "class": "Individuele Begeleiding",
+          "category": "zorg",
+          "email": "hans.meyfroodt@hfamilie.be",
+          "quote": "We bieden een extra duwtje in de rug zodat iedereen de kans krijgt om op eigen tempo te groeien."
+        },
+        {
+          "id": "staff-28",
+          "name": "Annelies Keyzer",
+          "role": "Kinderverzorgster",
+          "class": "Kleuterverzorging",
+          "category": "zorg",
+          "email": "annelies.keyzer@hfamilie.be",
+          "quote": "Voor de allerkleinsten ben ik een warme haven van troost en verzorging tijdens de schooluren."
+        }
       ]
     },
     "pillars": [
@@ -203,6 +457,260 @@
           "name": "Teacher Anke",
           "role": "Care Coordinator",
           "quote": "Tailored care for every child, because every small step is one of great significance."
+        }
+      ],
+      "allMembers": [
+        {
+          "id": "staff-1",
+          "name": "Dominique Bombey",
+          "role": "Administrative Principal",
+          "class": "Administration",
+          "category": "directie",
+          "email": "dominique.bombey@hfamilie.be",
+          "quote": "A well-organized school forms the quiet foundation in which teachers and children can shine."
+        },
+        {
+          "id": "staff-2",
+          "name": "Annemie Foulon",
+          "role": "Educational Principal",
+          "class": "School Leadership",
+          "category": "directie",
+          "email": "annemie.foulon@hfamilie.be",
+          "quote": "Our pedagogical vision puts the child at the center. Learning with head, heart, and hands is our guide."
+        },
+        {
+          "id": "staff-3",
+          "name": "Teacher Charis",
+          "role": "Kindergarten Teacher",
+          "class": "Rabbit Class (2.5 - 3 yrs)",
+          "category": "kleuter",
+          "email": "charis.hawinkel@hfamilie.be",
+          "quote": "Welcome little friends! In the Rabbit Class, we take our first big steps into the school world together."
+        },
+        {
+          "id": "staff-4",
+          "name": "Teacher Hilde",
+          "role": "Kindergarten Teacher",
+          "class": "Fish Class (3 yrs)",
+          "category": "kleuter",
+          "email": "hilde.vandervelde@hfamilie.be",
+          "quote": "Like little fish in the water, we swim together through a year full of fun, play, and wonder."
+        },
+        {
+          "id": "staff-5",
+          "name": "Teacher Sanne",
+          "role": "Kindergarten Teacher",
+          "class": "Bee Class (4 yrs)",
+          "category": "kleuter",
+          "email": "sanne.belmans@hfamilie.be",
+          "quote": "We buzz and fly around happily in our class, learning from each other and building our talents."
+        },
+        {
+          "id": "staff-6",
+          "name": "Teacher Karen",
+          "role": "Kindergarten Teacher",
+          "class": "Duck Class (4 - 5 yrs)",
+          "category": "kleuter",
+          "email": "karen.vandevijver@hfamilie.be",
+          "quote": "Learning through play and discovery is central. Together we will make it a splashing year!"
+        },
+        {
+          "id": "staff-7",
+          "name": "Teacher Katrien",
+          "role": "Kindergarten & PE Teacher",
+          "class": "Duck Class & Movement",
+          "category": "kleuter",
+          "email": "katrien.heylen@hfamilie.be",
+          "quote": "Moving is healthy and fun! I help our toddlers develop their motor skills in a playful way."
+        },
+        {
+          "id": "staff-8",
+          "name": "Teacher Laura",
+          "role": "Kindergarten Teacher",
+          "class": "Bear Class (5 yrs)",
+          "category": "kleuter",
+          "email": "laura.laenen@hfamilie.be",
+          "quote": "In the Bear Class, we prepare our oldest toddlers for the big step to first grade."
+        },
+        {
+          "id": "staff-9",
+          "name": "Teacher Lynn",
+          "role": "Kindergarten & Support Teacher",
+          "class": "Bear Class & 1LA Support",
+          "category": "kleuter",
+          "email": "lynn.ceulemans@hfamilie.be",
+          "quote": "I ensure a smooth transition between kindergarten and primary school with extra care support."
+        },
+        {
+          "id": "staff-10",
+          "name": "Teacher Els",
+          "role": "1st Grade Teacher",
+          "class": "Class 1LA",
+          "category": "lager",
+          "email": "els.vandepeer@hfamilie.be",
+          "quote": "Learning to read and write is a magical adventure. I enjoy those shiny eyes every single day!"
+        },
+        {
+          "id": "staff-11",
+          "name": "Teacher Lotte B.",
+          "role": "1st Grade Teacher",
+          "class": "Class 1LB",
+          "category": "lager",
+          "email": "lotte.baplu@hfamilie.be",
+          "quote": "We lay the foundation for lifelong learning. With patience and fun, we build letters and numbers."
+        },
+        {
+          "id": "staff-12",
+          "name": "Teacher Eveline",
+          "role": "2nd Grade Teacher",
+          "class": "Class 2LA",
+          "category": "lager",
+          "email": "eveline.claes@hfamilie.be",
+          "quote": "Practicing multiplication tables and reading fluently! In the second grade, we set the growth spurt in motion."
+        },
+        {
+          "id": "staff-13",
+          "name": "Teacher Alec",
+          "role": "3rd Grade Teacher",
+          "class": "Class 3LA",
+          "category": "lager",
+          "email": "alec.geerts@hfamilie.be",
+          "quote": "Independence and cooperation grow here every day. Making mistakes is allowed; that is how you learn!"
+        },
+        {
+          "id": "staff-14",
+          "name": "Teacher Koen",
+          "role": "3rd Grade Teacher",
+          "class": "Class 3LB",
+          "category": "lager",
+          "email": "koen.jacobs@hfamilie.be",
+          "quote": "An active classroom where curiosity is rewarded. We go on research journeys together!"
+        },
+        {
+          "id": "staff-15",
+          "name": "Teacher Arno",
+          "role": "4th Grade Teacher",
+          "class": "Class 4LA",
+          "category": "lager",
+          "email": "arno.coppens@hfamilie.be",
+          "quote": "Achieving goals together. We turn difficult curriculum topics into exciting learning challenges."
+        },
+        {
+          "id": "staff-16",
+          "name": "Teacher Evy",
+          "role": "4th Grade Teacher",
+          "class": "Class 4LA (Co-teaching)",
+          "category": "lager",
+          "email": "evy.hens@hfamilie.be",
+          "quote": "Two teachers see more than one. With co-teaching, we give every child the attention they deserve."
+        },
+        {
+          "id": "staff-17",
+          "name": "Teacher Lotte J.",
+          "role": "4th Grade Teacher",
+          "class": "Class 4LB",
+          "category": "lager",
+          "email": "lotte.janssens@hfamilie.be",
+          "quote": "Creativity and structure go hand in hand. We turn every day into a rewarding learning party."
+        },
+        {
+          "id": "staff-18",
+          "name": "Teacher Sandra",
+          "role": "5th Grade Teacher",
+          "class": "Class 5LA",
+          "category": "lager",
+          "email": "sandra.pottiez@hfamilie.be",
+          "quote": "In the fifth grade, we push boundaries and slowly prepare for the big step to secondary school."
+        },
+        {
+          "id": "staff-19",
+          "name": "Teacher Elien",
+          "role": "5th Grade Teacher",
+          "class": "Class 5LB",
+          "category": "lager",
+          "email": "elien.vanloo@hfamilie.be",
+          "quote": "Learning to speak French and processing large numbers! We support each other and grow together."
+        },
+        {
+          "id": "staff-20",
+          "name": "Teacher Evie",
+          "role": "5th Grade Teacher",
+          "class": "Class 5LB (Co-teaching)",
+          "category": "lager",
+          "email": "evie.vanechelpoel@hfamilie.be",
+          "quote": "Each child learns differently. Through differentiation and tailoring, we involve everyone in the lesson."
+        },
+        {
+          "id": "staff-21",
+          "name": "Teacher Kathleen",
+          "role": "6th Grade Teacher",
+          "class": "Class 6LA",
+          "category": "lager",
+          "email": "kathleen.meutermans@hfamilie.be",
+          "quote": "The final year of primary school! We wrap up a wonderful chapter and look forward with confidence."
+        },
+        {
+          "id": "staff-22",
+          "name": "Teacher Lien B.",
+          "role": "6th Grade Teacher",
+          "class": "Class 6LA (Co-teaching)",
+          "category": "lager",
+          "email": "lien.braspenningx@hfamilie.be",
+          "quote": "Building the bridge to secondary school. We stimulate critical thinking and personal responsibility."
+        },
+        {
+          "id": "staff-23",
+          "name": "Teacher Gert",
+          "role": "6th Grade Teacher",
+          "class": "Class 6LB",
+          "category": "lager",
+          "email": "gert.maes@hfamilie.be",
+          "quote": "Ready for the leap! In 6LB we close our primary school years with unforgettable memories and a strong foundation."
+        },
+        {
+          "id": "staff-24",
+          "name": "Teacher Katrien H.",
+          "role": "PE Teacher",
+          "class": "Physical Education",
+          "category": "zorg",
+          "email": "katrien.hofmans@hfamilie.be",
+          "quote": "Sports, play, and fair play! We stimulate the physical and social skills of all our students."
+        },
+        {
+          "id": "staff-25",
+          "name": "Teacher Roel",
+          "role": "PE Teacher",
+          "class": "Physical Education",
+          "category": "zorg",
+          "email": "roel.brand@hfamilie.be",
+          "quote": "Team spirit and pleasure in movement are central during my gym and swimming lessons."
+        },
+        {
+          "id": "staff-26",
+          "name": "Heidi Van Grootel",
+          "role": "Care & Anchor Teacher",
+          "class": "Care Coordination",
+          "category": "zorg",
+          "email": "heidi.vangrootel@hfamilie.be",
+          "quote": "Care coordination means listening, connecting, and supporting wherever it is needed for every child."
+        },
+        {
+          "id": "staff-27",
+          "name": "Hans Meyfroodt",
+          "role": "Care Support Specialist",
+          "class": "Individual Guidance",
+          "category": "zorg",
+          "email": "hans.meyfroodt@hfamilie.be",
+          "quote": "We offer an extra helping hand so that everyone gets the opportunity to grow at their own pace."
+        },
+        {
+          "id": "staff-28",
+          "name": "Annelies Keyzer",
+          "role": "Nursery Assistant",
+          "class": "Kindergarten Care",
+          "category": "zorg",
+          "email": "annelies.keyzer@hfamilie.be",
+          "quote": "For the littlest ones, I am a warm harbor of comfort and care during school hours."
         }
       ]
     },

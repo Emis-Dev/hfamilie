@@ -1952,3 +1952,388 @@ textarea.form-control {
   color: rgba(255, 255, 255, 0.9);
 }
 
+/* ======================================================== */
+/* 8. Widescreen Split-Screen Tour Request Modal Styles */
+
+.tour-dialog-widescreen {
+  max-width: 1200px !important;
+  width: calc(100% - 2rem) !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  padding: 0 !important;
+  border-radius: var(--radius-xl) !important;
+  background: #ffffff !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.tour-grid-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .tour-grid-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.tour-form-fields-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 600px) {
+  .tour-form-fields-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Photo and overlays */
+.tour-photo-wrapper {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  aspect-ratio: 1.38;
+  border: 4px solid #ffffff;
+  background-color: var(--color-primary-soft);
+}
+
+.tour-photo-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.tour-overlay-welcome-card {
+  position: absolute;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  background-color: #ffffff;
+  border-radius: var(--radius-md);
+  padding: 1.15rem 1.25rem;
+  max-width: 320px;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+  z-index: 10;
+  border: 1px solid var(--color-border);
+  animation: modal-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.tour-overlay-heart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: #fef08a; /* Soft yellow circle */
+  color: #eab308;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(234, 179, 8, 0.15);
+}
+
+.tour-overlay-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.tour-overlay-title {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.tour-overlay-desc {
+  font-size: 0.76rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+/* Bottom Pillars Grid */
+.tour-pillars-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.tour-value-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.15rem;
+  background-color: #f8fafc;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: all 0.25s ease;
+}
+
+.tour-value-badge:hover {
+  background-color: var(--color-primary-light);
+  border-color: var(--color-primary-soft);
+  transform: translateY(-1px);
+}
+
+.tour-value-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background-color: #ffffff;
+  color: var(--color-primary);
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+}
+
+.tour-value-badge:hover .tour-value-icon-wrapper {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border-color: var(--color-primary);
+}
+
+.tour-value-text {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.35;
+}
+
+/* Button & Arrow pointer container */
+.tour-submit-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.doodle-arrow-pointer {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+  width: 4.5rem;
+  height: auto;
+  color: #eab308;
+  pointer-events: none;
+  margin-left: 0.75rem;
+}
+
+@media (max-width: 600px) {
+  .doodle-arrow-pointer {
+    display: none; /* Hide pointing arrow on small viewports */
+  }
+}
+
+.btn-tour-submit {
+  background-color: var(--color-primary) !important;
+  color: #ffffff !important;
+  padding: 0.85rem 2rem !important;
+  font-weight: 700 !important;
+  border-radius: 100px !important;
+  box-shadow: var(--shadow-sm) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-tour-submit:hover {
+  background-color: var(--color-primary-dark) !important;
+  box-shadow: 0 8px 20px hsla(var(--primary-h) var(--primary-s) var(--primary-l) / 0.25) !important;
+}
+
+.tour-gdpr-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.76rem;
+  color: var(--color-text-muted);
+  margin-top: 0.75rem;
+}
+
+.tour-gdpr-badge svg {
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+/* ======================================================== */
+/* 9. Interactive Team Directory Modal Styles */
+
+.team-dialog {
+  max-width: 1000px !important;
+  width: calc(100% - 2rem) !important;
+  padding: 0 !important;
+  border-radius: var(--radius-xl) !important;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+  border: 1px solid var(--color-border) !important;
+  overflow: hidden !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 0.5rem 0.25rem;
+}
+
+@media (max-width: 600px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.team-card {
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.team-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-primary-soft);
+  box-shadow: 0 12px 24px hsla(var(--primary-h) var(--primary-s) var(--primary-l) / 0.08);
+}
+
+.team-card-inner {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+
+@media (max-width: 480px) {
+  .team-card-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+.team-card-avatar-wrapper {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 3px solid #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+.team-card-details {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.team-card-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  margin-bottom: 0.15rem;
+}
+
+.team-card-role {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 0.25rem;
+}
+
+.team-card-class {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  background-color: var(--color-primary-light);
+  padding: 0.2rem 0.5rem;
+  border-radius: 100px;
+  margin-bottom: 0.75rem;
+}
+
+@media (max-width: 480px) {
+  .team-card-class {
+    align-self: center;
+  }
+}
+
+.team-card-quote {
+  position: relative;
+  background-color: #f8fafc;
+  border-left: 2.5px solid var(--color-primary);
+  padding: 0.6rem 0.75rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-bottom: 1rem;
+  font-style: italic;
+  font-size: 0.76rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.quote-icon {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.5rem;
+  width: 1rem;
+  height: 1rem;
+  color: var(--color-primary-light);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.team-card-email-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  align-self: flex-start;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  background-color: #ffffff;
+  border: 1px solid var(--color-border);
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.team-card-email-btn:hover {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border-color: var(--color-primary);
+}
+
+@media (max-width: 480px) {
+  .team-card-email-btn {
+    align-self: center;
+    width: 100%;
+  }
+}
+
+

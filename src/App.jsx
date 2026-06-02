@@ -13,6 +13,8 @@ function App() {
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [showSubpageModal, setShowSubpageModal] = useState(false);
   const [showEnrollmentWizard, setShowEnrollmentWizard] = useState(false);
+  const [showTeamModal, setShowTeamModal] = useState(false);
+  const [teamFilter, setTeamFilter] = useState('all');
   const [subpageContent, setSubpageContent] = useState({ title: '', text: '' });
   
   // Navigation Dropdown states
@@ -22,6 +24,17 @@ function App() {
   // Form submission success states
   const [tourSubmitted, setTourSubmitted] = useState(false);
   const [contactSubmitted, setContactSubmitted] = useState(false);
+
+  // Tour Form Widescreen Mockup States
+  const [tourParentName, setTourParentName] = useState('');
+  const [tourEmail, setTourEmail] = useState('');
+  const [tourPhone, setTourPhone] = useState('');
+  const [tourChildName, setTourChildName] = useState('');
+  const [tourChildBirthYear, setTourChildBirthYear] = useState('');
+  const [tourPreferredDate, setTourPreferredDate] = useState('');
+  const [tourPreferredTime, setTourPreferredTime] = useState('ochtend');
+  const [tourVisitorCount, setTourVisitorCount] = useState('1');
+  const [tourComments, setTourComments] = useState('');
 
   // Enrollment Wizard States (Futuristic 2030s Dashboard)
   const [enrollmentStep, setEnrollmentStep] = useState(1);
@@ -49,6 +62,7 @@ function App() {
   const subpageDialogRef = useRef(null);
   const enrollmentDialogRef = useRef(null);
   const calendarDialogRef = useRef(null);
+  const teamDialogRef = useRef(null);
 
   // Mock school calendar events data
   const calendarEvents = [
@@ -122,6 +136,15 @@ function App() {
       setCalendarFilter('all');
     }
   }, [showCalendarModal]);
+
+  useEffect(() => {
+    if (showTeamModal) {
+      teamDialogRef.current?.showModal();
+    } else {
+      teamDialogRef.current?.close();
+      setTeamFilter('all');
+    }
+  }, [showTeamModal]);
 
   const openSubpage = (titleKey, textKey) => {
     setSubpageContent({
@@ -360,7 +383,7 @@ function App() {
                 <a href="#" className="nav-link" onClick={(e) => { e.preventDefault(); setShowCalendarModal(true); }}>{t.header.nav.calendar}</a>
               </li>
               <li className="nav-item">
-                <a href="#team" className="nav-link">{t.header.nav.team}</a>
+                <a href="#team" onClick={(e) => { e.preventDefault(); setShowTeamModal(true); }} className="nav-link">{t.header.nav.team}</a>
               </li>
               <li className="nav-item">
                 <a href="#contact" className="nav-link">{t.header.nav.contact}</a>
@@ -687,7 +710,7 @@ function App() {
               </p>
             </div>
 
-            <a href="#" onClick={(e) => { e.preventDefault(); alert("Volledige teamlijst is in aanbouw!"); }} className="bento-link">
+            <a href="#" onClick={(e) => { e.preventDefault(); setShowTeamModal(true); }} className="bento-link">
               {t.team.allTeam}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -768,54 +791,317 @@ function App() {
       <dialog 
         ref={tourDialogRef} 
         onClick={(e) => handleBackdropClick(e, setShowTourModal)}
+        className="tour-dialog-widescreen"
       >
-        <div className="modal-header">
-          <span className="modal-title">{t.header.ctaTour}</span>
-          <button onClick={() => setShowTourModal(false)} className="modal-close-btn">&times;</button>
+        <div style={{ position: 'relative', width: '100%' }}>
+          <button 
+            onClick={() => setShowTourModal(false)} 
+            className="modal-close-btn" 
+            style={{ 
+              position: 'absolute', 
+              top: '1.5rem', 
+              right: '1.5rem', 
+              zIndex: 50,
+              background: '#f1f5f9',
+              border: 'none',
+              width: '2.25rem',
+              height: '2.25rem',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              fontSize: '1.25rem',
+              color: 'var(--color-text)'
+            }}
+          >
+            &times;
+          </button>
+
+          {!tourSubmitted ? (
+            <div className="tour-grid-layout" style={{ padding: '3rem 2.5rem' }}>
+              {/* Left Column: Form */}
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                  {/* Sun-heart SVG doodle header */}
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#eab308" strokeWidth="2.5">
+                    <circle cx="12" cy="12" r="5" strokeDasharray="2 2" />
+                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+                    <path d="M12 14.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#fef08a" />
+                  </svg>
+                  <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#eab308', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    {lang === 'nl' ? 'Ervaar onze sfeer' : 'Experience our school'}
+                  </span>
+                </div>
+                
+                <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '2rem', fontWeight: 800, color: 'var(--color-primary)', marginBottom: '1.5rem', lineHeight: 1.1 }}>
+                  {lang === 'nl' ? 'Vraag een persoonlijke rondleiding' : 'Request a Personal Tour'}
+                </h2>
+
+                <form onSubmit={(e) => { e.preventDefault(); setTourSubmitted(true); }}>
+                  <div className="tour-form-fields-grid">
+                    <div className="form-group">
+                      <label htmlFor="tour-parent">{lang === 'nl' ? 'Naam ouder / verzorger *' : 'Parent / Guardian Name *'}</label>
+                      <input 
+                        type="text" 
+                        id="tour-parent" 
+                        required 
+                        className="form-control" 
+                        placeholder="bv. Jan Peeters"
+                        value={tourParentName}
+                        onChange={(e) => setTourParentName(e.target.value)}
+                      />
+                    </div>
+                    
+                    <div className="form-group">
+                      <label htmlFor="tour-email">{lang === 'nl' ? 'E-mailadres *' : 'Email Address *'}</label>
+                      <input 
+                        type="email" 
+                        id="tour-email" 
+                        required 
+                        className="form-control" 
+                        placeholder="bv. jan@email.com"
+                        value={tourEmail}
+                        onChange={(e) => setTourEmail(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="tour-phone">{lang === 'nl' ? 'Telefoonnummer *' : 'Phone Number *'}</label>
+                      <input 
+                        type="tel" 
+                        id="tour-phone" 
+                        required 
+                        className="form-control" 
+                        placeholder="bv. +32 499 00 00 00"
+                        value={tourPhone}
+                        onChange={(e) => setTourPhone(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="tour-child-name">{lang === 'nl' ? 'Naam kind' : "Child's Name"}</label>
+                      <input 
+                        type="text" 
+                        id="tour-child-name" 
+                        className="form-control" 
+                        placeholder="bv. Sophie"
+                        value={tourChildName}
+                        onChange={(e) => setTourChildName(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="tour-child-birth">{lang === 'nl' ? 'Geboortejaar of groep *' : 'Birth Year or Grade *'}</label>
+                      <input 
+                        type="text" 
+                        id="tour-child-birth" 
+                        required 
+                        className="form-control" 
+                        placeholder="bv. 2022 of 1e leerjaar"
+                        value={tourChildBirthYear}
+                        onChange={(e) => setTourChildBirthYear(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="tour-date">{lang === 'nl' ? 'Voorkeursdatum *' : 'Preferred Date *'}</label>
+                      <input 
+                        type="date" 
+                        id="tour-date" 
+                        required 
+                        className="form-control"
+                        value={tourPreferredDate}
+                        onChange={(e) => setTourPreferredDate(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="tour-time">{lang === 'nl' ? 'Gewenst tijdstip *' : 'Preferred Time *'}</label>
+                      <select 
+                        id="tour-time" 
+                        className="form-control"
+                        value={tourPreferredTime}
+                        onChange={(e) => setTourPreferredTime(e.target.value)}
+                      >
+                        <option value="ochtend">{lang === 'nl' ? 'Ochtend (09:00 - 12:00)' : 'Morning (9 AM - 12 PM)'}</option>
+                        <option value="middag">{lang === 'nl' ? 'Namiddag (13:30 - 15:30)' : 'Afternoon (1:30 PM - 3:30 PM)'}</option>
+                        <option value="avond">{lang === 'nl' ? 'Na schooltijd (vanaf 15:45)' : 'After school (from 3:45 PM)'}</option>
+                      </select>
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="tour-visitors">{lang === 'nl' ? 'Aantal bezoekers *' : 'Number of Visitors *'}</label>
+                      <select 
+                        id="tour-visitors" 
+                        className="form-control"
+                        value={tourVisitorCount}
+                        onChange={(e) => setTourVisitorCount(e.target.value)}
+                      >
+                        <option value="1">1 {lang === 'nl' ? 'volwassene' : 'adult'}</option>
+                        <option value="2">2 {lang === 'nl' ? 'volwassenen' : 'adults'}</option>
+                        <option value="3">2 {lang === 'nl' ? 'volwassenen + kind(eren)' : 'adults + child(ren)'}</option>
+                        <option value="4">{lang === 'nl' ? 'Meer dan 3 personen' : 'More than 3 people'}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="form-group" style={{ marginTop: '1rem' }}>
+                    <label htmlFor="tour-comments">{lang === 'nl' ? 'Opmerkingen of vragen' : 'Comments or Questions'}</label>
+                    <textarea 
+                      id="tour-comments" 
+                      className="form-control" 
+                      rows="3" 
+                      placeholder={lang === 'nl' ? 'Heeft u specifieke vragen of wensen?' : 'Do you have specific questions or requests?'}
+                      value={tourComments}
+                      onChange={(e) => setTourComments(e.target.value)}
+                      style={{ resize: 'vertical' }}
+                    ></textarea>
+                  </div>
+
+                  <div style={{ marginTop: '1.75rem' }}>
+                    <div className="tour-submit-wrapper">
+                      <button type="submit" className="btn btn-tour-submit">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                        </svg>
+                        {lang === 'nl' ? 'Vraag je rondleiding aan' : 'Request Your Tour'}
+                      </button>
+
+                      {/* Yellow doodle pointing arrow */}
+                      <svg className="doodle-arrow-pointer" viewBox="0 0 100 60" fill="none" stroke="currentColor" strokeWidth="3">
+                        <path d="M10,40 Q35,10 70,25 Q80,30 85,35" strokeDasharray="5,5" />
+                        <path d="M85,35 L75,32 M85,35 L80,45" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  <div className="tour-gdpr-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                      <path d="m9 11 2 2 4-4" />
+                    </svg>
+                    <span>
+                      {lang === 'nl' 
+                        ? 'Veilige verwerking volgens onze privacyverklaring.' 
+                        : 'Secure processing according to our privacy policy.'}
+                    </span>
+                  </div>
+                </form>
+              </div>
+
+              {/* Right Column: Visual Pane */}
+              <div style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <div className="tour-photo-wrapper">
+                  <img src={childrenImg} alt="Happy school children" />
+                  
+                  {/* Absolute positioned Welkom card */}
+                  <div className="tour-overlay-welcome-card">
+                    <div className="tour-overlay-heart">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
+                    </div>
+                    <div className="tour-overlay-text">
+                      <span className="tour-overlay-title">
+                        {lang === 'nl' ? 'Welkom bij Heilige Familie' : 'Welcome to Holy Family'}
+                      </span>
+                      <span className="tour-overlay-desc">
+                        {lang === 'nl'
+                          ? 'Ontdek onze kleinschalige, warme school en voel je meteen thuis.'
+                          : 'Discover our small-scale, warm school and feel right at home.'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 4 Benefit badges below */}
+                <div className="tour-pillars-grid">
+                  <div className="tour-value-badge">
+                    <div className="tour-value-icon-wrapper">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                      </svg>
+                    </div>
+                    <span className="tour-value-text">
+                      {lang === 'nl' ? 'Kleine klassen, veel aandacht' : 'Small classes, personal focus'}
+                    </span>
+                  </div>
+
+                  <div className="tour-value-badge">
+                    <div className="tour-value-icon-wrapper">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                      </svg>
+                    </div>
+                    <span className="tour-value-text">
+                      {lang === 'nl' ? 'Sterk in groei en talent' : 'Strong in growth & talent'}
+                    </span>
+                  </div>
+
+                  <div className="tour-value-badge">
+                    <div className="tour-value-icon-wrapper">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                      </svg>
+                    </div>
+                    <span className="tour-value-text">
+                      {lang === 'nl' ? 'Samen betrokken community' : 'Involved community'}
+                    </span>
+                  </div>
+
+                  <div className="tour-value-badge">
+                    <div className="tour-value-icon-wrapper">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                      </svg>
+                    </div>
+                    <span className="tour-value-text">
+                      {lang === 'nl' ? 'Respect voor mens & milieu' : 'Respect for people & nature'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div style={{ textAlign: 'center', padding: '4rem 2rem' }}>
+              <div style={{ 
+                width: '80px', 
+                height: '80px', 
+                backgroundColor: 'var(--color-primary-light)', 
+                borderRadius: '50%', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                margin: '0 auto 1.5rem',
+                color: 'var(--color-primary)'
+              }}>
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+              </div>
+              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.75rem', fontWeight: 800, color: 'var(--color-primary)', marginBottom: '0.75rem' }}>
+                {lang === 'nl' ? 'Aanvraag succesvol ontvangen!' : 'Request Received Successfully!'}
+              </h3>
+              <p style={{ fontSize: '1rem', color: 'var(--color-text-muted)', maxWidth: '500px', margin: '0 auto 2rem', lineHeight: 1.5 }}>
+                {lang === 'nl' 
+                  ? 'We nemen binnen 24 uur telefonisch of per e-mail contact met u op om een definitief moment af te spreken. We kijken ernaar uit om u te ontmoeten!' 
+                  : 'We will contact you within 24 hours by phone or email to schedule your visit. We look forward to meeting you!'}
+              </p>
+              <button 
+                onClick={() => setShowTourModal(false)} 
+                className="btn btn-primary"
+                style={{ padding: '0.75rem 2.5rem', borderRadius: '50px' }}
+              >
+                {lang === 'nl' ? 'Sluiten' : 'Close'}
+              </button>
+            </div>
+          )}
         </div>
-        {!tourSubmitted ? (
-          <form onSubmit={(e) => { e.preventDefault(); setTourSubmitted(true); }}>
-            <div className="form-group">
-              <label htmlFor="tour-name">{lang === 'nl' ? 'Naam ouder(s)' : 'Parent Name(s)'}</label>
-              <input type="text" id="tour-name" required className="form-control" placeholder="bv. Jan Peeters" />
-            </div>
-            <div className="form-group">
-              <label htmlFor="tour-email">E-mailadres</label>
-              <input type="email" id="tour-email" required className="form-control" placeholder="bv. jan@email.com" />
-            </div>
-            <div className="form-group">
-              <label htmlFor="tour-child-age">{lang === 'nl' ? 'Leeftijd kind' : "Child's Age"}</label>
-              <select id="tour-child-age" className="form-control">
-                <option>2,5 - 3 jaar</option>
-                <option>4 - 6 jaar</option>
-                <option>7 - 9 jaar</option>
-                <option>10 - 12 jaar</option>
-              </select>
-            </div>
-            <div className="form-group">
-              <label htmlFor="tour-date">{lang === 'nl' ? 'Voorkeur datum rondleiding' : 'Preferred Tour Date'}</label>
-              <input type="date" id="tour-date" required className="form-control" />
-            </div>
-            <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '1rem' }}>
-              {lang === 'nl' ? 'Aanvraag versturen' : 'Submit Request'}
-            </button>
-          </form>
-        ) : (
-          <div style={{ textAlign: 'center', padding: '1.5rem 0' }}>
-            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="green" strokeWidth="2.5" style={{ margin: '0 auto 1rem' }}>
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-              <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
-            <h4 style={{ color: 'var(--color-primary)', fontSize: '1.25rem', marginBottom: '0.5rem' }}>
-              {lang === 'nl' ? 'Aanvraag ontvangen!' : 'Request Received!'}
-            </h4>
-            <p style={{ fontSize: '0.9rem', margin: '0 auto' }}>
-              {lang === 'nl' 
-                ? 'We nemen zo snel mogelijk contact met u op om de rondleiding te bevestigen. Tot snel!' 
-                : 'We will contact you as soon as possible to confirm your tour. See you soon!'}
-            </p>
-          </div>
-        )}
       </dialog>
 
       {/* Contact Form Modal */}
@@ -1705,6 +1991,179 @@ function App() {
                 <span>•</span>
                 <a href="#" onClick={(e) => { e.preventDefault(); setShowCalendarModal(false); }} className="policy-link">{lang === 'nl' ? 'Sluiten' : 'Close'}</a>
               </div>
+            </div>
+          </div>
+        </div>
+      </dialog>
+
+      {/* Team Directory Modal */}
+      <dialog 
+        ref={teamDialogRef} 
+        onClick={(e) => handleBackdropClick(e, setShowTeamModal)}
+        className="team-dialog"
+      >
+        <div className="wizard-container" style={{ maxWidth: '1000px', width: '100%' }}>
+          <div className="wizard-modal-header">
+            <div className="wizard-title-group">
+              <span className="wizard-icon-glow">🎒</span>
+              <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, color: 'var(--color-primary)' }}>{lang === 'nl' ? 'Ons Team' : 'Our Team'}</h2>
+            </div>
+            <button onClick={() => setShowTeamModal(false)} className="modal-close-btn">&times;</button>
+          </div>
+
+          <div className="wizard-body" style={{ padding: '2rem 1.5rem', maxHeight: '72vh', overflowY: 'auto' }}>
+            {/* Category Filters */}
+            <div className="filter-chips" style={{ borderBottom: '1px solid var(--color-border)', paddingBottom: '1.25rem', marginBottom: '1.5rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              <button 
+                onClick={() => setTeamFilter('all')} 
+                className={`filter-chip ${teamFilter === 'all' ? 'active' : ''}`}
+                style={{ fontSize: '0.8rem', padding: '0.4rem 1rem' }}
+              >
+                {lang === 'nl' ? 'Alles' : 'All'}
+              </button>
+              <button 
+                onClick={() => setTeamFilter('directie')} 
+                className={`filter-chip ${teamFilter === 'directie' ? 'active' : ''}`}
+                style={{ fontSize: '0.8rem', padding: '0.4rem 1rem' }}
+              >
+                {lang === 'nl' ? 'Directie' : 'Leadership'}
+              </button>
+              <button 
+                onClick={() => setTeamFilter('kleuter')} 
+                className={`filter-chip ${teamFilter === 'kleuter' ? 'active' : ''}`}
+                style={{ fontSize: '0.8rem', padding: '0.4rem 1rem' }}
+              >
+                {lang === 'nl' ? 'Kleuterschool' : 'Kindergarten'}
+              </button>
+              <button 
+                onClick={() => setTeamFilter('lager')} 
+                className={`filter-chip ${teamFilter === 'lager' ? 'active' : ''}`}
+                style={{ fontSize: '0.8rem', padding: '0.4rem 1rem' }}
+              >
+                {lang === 'nl' ? 'Lagere School' : 'Primary School'}
+              </button>
+              <button 
+                onClick={() => setTeamFilter('zorg')} 
+                className={`filter-chip ${teamFilter === 'zorg' ? 'active' : ''}`}
+                style={{ fontSize: '0.8rem', padding: '0.4rem 1rem' }}
+              >
+                {lang === 'nl' ? 'Zorg & Ondersteuning' : 'Care & Support'}
+              </button>
+            </div>
+
+            {/* Members Grid */}
+            <div className="team-grid">
+              {(() => {
+                const list = t.team.allMembers || [];
+                const filtered = teamFilter === 'all' ? list : list.filter(m => m.category === teamFilter);
+                
+                if (filtered.length === 0) {
+                  return (
+                    <div style={{ textAlign: 'center', gridColumn: '1 / -1', padding: '3rem', color: 'var(--color-text-muted)', fontSize: '0.9rem' }}>
+                      {lang === 'nl' ? 'Geen teamleden gevonden.' : 'No team members found.'}
+                    </div>
+                  );
+                }
+
+                return filtered.map((member, idx) => {
+                  // Generate custom avatar styles based on index
+                  const avatarBg = ['#dbeafe', '#fef3c7', '#fee2e2', '#dcfce7', '#f3e8ff', '#e0f2fe'][idx % 6];
+                  const hairColor = ['#3b82f6', '#f59e0b', '#ef4444', '#10b981', '#8b5cf6', '#0ea5e9'][idx % 6];
+                  
+                  return (
+                    <div key={member.id} className="team-card">
+                      <div className="team-card-inner">
+                        {/* SVG Avatar with unique design per teacher */}
+                        <div className="team-card-avatar-wrapper" style={{ backgroundColor: avatarBg }}>
+                          <svg viewBox="0 0 100 100" width="64" height="64">
+                            {/* Head/Skin */}
+                            <circle cx="50" cy="46" r="22" fill="#fed7aa" />
+                            {/* Eyes */}
+                            <circle cx="43" cy="44" r="2.5" fill="#1e293b" />
+                            <circle cx="57" cy="44" r="2.5" fill="#1e293b" />
+                            {/* Smile */}
+                            <path d="M44 54 Q50 60 56 54" fill="none" stroke="#1e293b" strokeWidth="2.5" strokeLinecap="round" />
+                            
+                            {/* Hair styles */}
+                            {idx % 3 === 0 && (
+                              <path d="M28 35 Q50 15 72 35 Q50 25 28 35 Z" fill={hairColor} />
+                            )}
+                            {idx % 3 === 1 && (
+                              <>
+                                <circle cx="36" cy="30" r="10" fill={hairColor} />
+                                <circle cx="50" cy="24" r="11" fill={hairColor} />
+                                <circle cx="64" cy="30" r="10" fill={hairColor} />
+                                <circle cx="30" cy="42" r="8" fill={hairColor} />
+                                <circle cx="70" cy="42" r="8" fill={hairColor} />
+                              </>
+                            )}
+                            {idx % 3 === 2 && (
+                              <>
+                                <path d="M26 40 C26 20, 74 20, 74 40 C74 44, 70 42, 68 45 C64 32, 36 32, 32 45 C30 42, 26 44, 26 40 Z" fill={hairColor} />
+                                <path d="M26 40 L24 60 C24 64, 30 64, 30 60 L32 44" fill={hairColor} />
+                                <path d="M74 40 L76 60 C76 64, 70 64, 70 60 L68 44" fill={hairColor} />
+                              </>
+                            )}
+                            
+                            {/* Cheeks */}
+                            <circle cx="36" cy="49" r="2.5" fill="#f43f5e" opacity="0.4" />
+                            <circle cx="64" cy="49" r="2.5" fill="#f43f5e" opacity="0.4" />
+                            
+                            {/* Glasses */}
+                            {idx % 4 === 1 && (
+                              <>
+                                <circle cx="43" cy="44" r="7" fill="none" stroke="#475569" strokeWidth="2" />
+                                <circle cx="57" cy="44" r="7" fill="none" stroke="#475569" strokeWidth="2" />
+                                <line x1="50" y1="44" x2="50" y2="44" stroke="#475569" strokeWidth="2" />
+                              </>
+                            )}
+                            
+                            {/* Clothes */}
+                            <path d="M20 82 C20 72, 32 68, 50 68 C68 68, 80 72, 80 82 L80 100 L20 100 Z" fill={hairColor} />
+                            <path d="M42 68 L50 76 L58 68 Z" fill="#fed7aa" />
+                          </svg>
+                        </div>
+
+                        <div className="team-card-details">
+                          <h4 className="team-card-name" style={{ fontSize: '1.05rem', margin: 0 }}>{member.name}</h4>
+                          <p className="team-card-role" style={{ fontSize: '0.8rem', margin: '0.1rem 0 0.3rem', fontWeight: 600 }}>{member.role}</p>
+                          <div style={{ display: 'flex' }}>
+                            <span className="team-card-class">{member.class}</span>
+                          </div>
+                          
+                          <div className="team-card-quote">
+                            <svg className="quote-icon" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                            </svg>
+                            <p style={{ margin: 0 }}>"{member.quote}"</p>
+                          </div>
+
+                          <a href={`mailto:${member.email}`} className="team-card-email-btn">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                              <polyline points="22,6 12,13 2,6" />
+                            </svg>
+                            {lang === 'nl' ? 'Stuur e-mail' : 'Send email'}
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                });
+              })()}
+            </div>
+          </div>
+
+          <div className="wizard-footer" style={{ padding: '1rem 2.5rem', backgroundColor: 'var(--color-bg)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.72rem', color: 'var(--color-text-muted)', width: '100%' }}>
+              <span>Basisschool Heilige Familie Schoten • Team Directory</span>
+              <button 
+                onClick={() => setShowTeamModal(false)} 
+                className="policy-link"
+                style={{ background: 'none', border: 'none', cursor: 'pointer', fontInherit: 'inherit', fontWeight: 'bold' }}
+              >
+                {lang === 'nl' ? 'Sluiten' : 'Close'}
+              </button>
             </div>
           </div>
         </div>
