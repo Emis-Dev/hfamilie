@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import mockData from './data/mockData.json';
 import childrenImg from './assets/happy_school_children.png';
+import schoolLogo from './assets/school_logo.png';
 
 function App() {
   const [lang, setLang] = useState('nl');
@@ -93,17 +94,8 @@ function App() {
       <header className="header-wrapper glass-header">
         <div className="header-inner">
           <a href="#" className="header-logo">
-            {/* Custom school mascot bird logo SVG */}
-            <svg viewBox="0 0 100 100" width="40" height="40" fill="currentColor">
-              <path d="M50 15 C30 15 20 30 20 45 C20 52 23 58 27 63 L22 80 C21 83 24 85 27 83 L40 73 C43 74 46 75 50 75 C70 75 80 60 80 45 C80 30 70 15 50 15 Z" fill="#eff6ff" stroke="currentColor" strokeWidth="4" />
-              <circle cx="42" cy="40" r="6" fill="currentColor" />
-              <path d="M42 38 Q45 35 48 38" stroke="white" strokeWidth="2" fill="none" />
-              <path d="M58 40 Q65 48 55 52" stroke="currentColor" strokeWidth="4" fill="none" strokeLinecap="round" />
-              <path d="M18 45 L32 40" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-              {/* Shield banner HF */}
-              <rect x="68" y="55" width="22" height="26" rx="4" fill="currentColor" />
-              <text x="73" y="73" fill="white" fontSize="13" fontWeight="bold" fontFamily="var(--font-display)">HF</text>
-            </svg>
+            {/* Real school mascot logo */}
+            <img src={schoolLogo} alt="Mascotte Heilige Familie" style={{ width: '48px', height: 'auto', objectFit: 'contain' }} />
             <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.1 }}>
               <span style={{ fontSize: '1.05rem', fontWeight: 800 }}>{t.header.schoolName}</span>
               <span style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--color-text-muted)', display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
@@ -193,21 +185,52 @@ function App() {
 
             {/* Action buttons matching mockup header */}
             <div style={{ display: 'flex', gap: '0.75rem', marginLeft: '0.5rem' }}>
-              <button onClick={() => setShowTourModal(true)} className="btn btn-secondary" style={{ fontSize: '0.85rem', padding: '0.6rem 1.15rem' }}>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <button 
+                onClick={() => setShowTourModal(true)} 
+                className="btn btn-secondary" 
+                style={{ 
+                  fontSize: '0.8rem', 
+                  padding: '0.45rem 1.15rem', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '0.5rem', 
+                  textAlign: 'left', 
+                  lineHeight: 1.15,
+                  borderRadius: '100px'
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
                   <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                   <circle cx="9" cy="7" r="4"></circle>
                   <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                   <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                 </svg>
-                {t.header.ctaTour}
+                <span style={{ whiteSpace: 'pre-line', fontWeight: 700 }}>
+                  {t.header.ctaTour}
+                </span>
               </button>
-              <button onClick={() => setShowContactModal(true)} className="btn btn-outline" style={{ fontSize: '0.85rem', padding: '0.6rem 1.15rem', borderWidth: '1px' }}>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <button 
+                onClick={() => setShowContactModal(true)} 
+                className="btn btn-outline" 
+                style={{ 
+                  fontSize: '0.8rem', 
+                  padding: '0.45rem 1.15rem', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '0.5rem', 
+                  textAlign: 'left', 
+                  lineHeight: 1.15,
+                  borderRadius: '100px',
+                  borderWidth: '1px'
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                   <polyline points="22,6 12,13 2,6"></polyline>
                 </svg>
-                {t.header.ctaContact}
+                <span style={{ whiteSpace: 'pre-line', fontWeight: 700 }}>
+                  {t.header.ctaContact}
+                </span>
               </button>
             </div>
           </nav>

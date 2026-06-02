@@ -11,8 +11,8 @@
         "team": "Team",
         "contact": "Contact"
       },
-      "ctaTour": "Rondleiding aanvragen",
-      "ctaContact": "Contacteer ons"
+      "ctaTour": "Rondleiding\naanvragen",
+      "ctaContact": "Contacteer\nons"
     },
     "hero": {
       "title": "Samen groeien, elke dag een beetje meer.",
@@ -130,8 +130,8 @@
         "team": "Team",
         "contact": "Contact"
       },
-      "ctaTour": "Request a tour",
-      "ctaContact": "Contact us"
+      "ctaTour": "Request a\ntour",
+      "ctaContact": "Contact\nus"
     },
     "hero": {
       "title": "Growing together, a little more every day.",
