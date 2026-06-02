@@ -35,12 +35,34 @@ function App() {
   const [passId, setPassId] = useState('');
   const [passAddedToWallet, setPassAddedToWallet] = useState(false);
 
+  // Interactive Calendar States (Futuristic Schedule Dashboard)
+  const [showCalendarModal, setShowCalendarModal] = useState(false);
+  const [calendarFilter, setCalendarFilter] = useState('all');
+  const [selectedMonth, setSelectedMonth] = useState(5); // June 2026 (0-indexed, so 5 is June)
+  const [selectedDayStr, setSelectedDayStr] = useState(null);
+  const [syncState, setSyncState] = useState('idle'); // idle, syncing, synced
+
   // Modal DOM references
   const tourDialogRef = useRef(null);
   const contactDialogRef = useRef(null);
   const videoDialogRef = useRef(null);
   const subpageDialogRef = useRef(null);
   const enrollmentDialogRef = useRef(null);
+  const calendarDialogRef = useRef(null);
+
+  // Mock school calendar events data
+  const calendarEvents = [
+    { id: 1, date: '2026-06-01', title: 'Pinkstermaandag', desc: 'Facultatieve verlofdag (vrij)', category: 'vacation', time: 'Hele dag' },
+    { id: 2, date: '2026-06-06', title: 'Groot Schoolfeest', desc: 'Optredens & BBQ op school', category: 'activity', time: '16:00 - 21:00' },
+    { id: 3, date: '2026-06-16', title: 'Facultatieve verlofdag', desc: 'School gesloten', category: 'vacation', time: 'Hele dag' },
+    { id: 4, date: '2026-06-24', title: 'Pedagogische studiedag', desc: 'Kinderen vrij', category: 'study', time: 'Hele dag' },
+    { id: 5, date: '2026-06-30', title: 'Laatste Schooldag', desc: 'Einde schooljaar (halve dag)', category: 'activity', time: '08:35 - 12:10' },
+    { id: 6, date: '2026-07-01', title: 'Start Zomervakantie ☀️', desc: 'Fijne vakantie allemaal!', category: 'vacation', time: '2 maanden' },
+    { id: 7, date: '2026-05-01', title: 'Dag van de Arbeid', desc: 'Wettelijke feestdag (vrij)', category: 'vacation', time: 'Hele dag' },
+    { id: 8, date: '2026-05-14', title: 'O.L.H. Hemelvaart', desc: 'Verlofdag (vrij)', category: 'vacation', time: 'Hele dag' },
+    { id: 9, date: '2026-05-15', title: 'Brugdag Hemelvaart', desc: 'Geen les', category: 'vacation', time: 'Hele dag' },
+    { id: 10, date: '2026-05-27', title: 'Zorg- & Evaluatiemoment', desc: 'Klasbesprekingen leerkrachten', category: 'study', time: 'Hele dag' }
+  ];
 
   // Content helpers
   const t = mockData[lang];
@@ -89,6 +111,17 @@ function App() {
       setPassAddedToWallet(false);
     }
   }, [showEnrollmentWizard]);
+
+  useEffect(() => {
+    if (showCalendarModal) {
+      calendarDialogRef.current?.showModal();
+    } else {
+      calendarDialogRef.current?.close();
+      setSyncState('idle');
+      setSelectedDayStr(null);
+      setCalendarFilter('all');
+    }
+  }, [showCalendarModal]);
 
   const openSubpage = (titleKey, textKey) => {
     setSubpageContent({
@@ -209,6 +242,53 @@ function App() {
     setEnrollmentStep(4);
   };
 
+  // Generate dynamic days array for calendar grid
+  const getDaysForMonth = (monthIndex) => {
+    const year = 2026;
+    // get first day of month (0 = Sunday, 1 = Monday...)
+    const firstDay = new Date(year, monthIndex, 1).getDay();
+    // Adjust for Monday-start (Belgian standard: Monday = 0, Tuesday = 1... Sunday = 6)
+    const offset = firstDay === 0 ? 6 : firstDay - 1;
+    
+    const days = [];
+    
+    // Previous month padding
+    const prevMonthIndex = monthIndex - 1;
+    const daysInPrevMonth = new Date(year, monthIndex, 0).getDate();
+    for (let i = offset - 1; i >= 0; i--) {
+      const dayNum = daysInPrevMonth - i;
+      const dateStr = `${year}-${String(prevMonthIndex + 1).padStart(2, '0')}-${String(dayNum).padStart(2, '0')}`;
+      days.push({ day: dayNum, isCurrentMonth: false, dateString: dateStr });
+    }
+    
+    // Current month days
+    const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
+    for (let i = 1; i <= daysInMonth; i++) {
+      const dateStr = `${year}-${String(monthIndex + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+      days.push({ day: i, isCurrentMonth: true, dateString: dateStr });
+    }
+    
+    // Next month padding (total cells: 35 or 42)
+    const totalCells = days.length > 35 ? 42 : 35;
+    const nextMonthIndex = monthIndex + 1;
+    let nextDay = 1;
+    while (days.length < totalCells) {
+      const dateStr = `${year}-${String(nextMonthIndex + 1).padStart(2, '0')}-${String(nextDay).padStart(2, '0')}`;
+      days.push({ day: nextDay, isCurrentMonth: false, dateString: dateStr });
+      nextDay++;
+    }
+    
+    return days;
+  };
+
+  // Trigger mockup sync to device calendar
+  const handleStartCalendarSync = () => {
+    setSyncState('syncing');
+    setTimeout(() => {
+      setSyncState('synced');
+    }, 2000); // 2 second sync loading animation
+  };
+
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       
@@ -277,7 +357,7 @@ function App() {
               </li>
               
               <li className="nav-item">
-                <a href="#agenda" className="nav-link">{t.header.nav.calendar}</a>
+                <a href="#" className="nav-link" onClick={(e) => { e.preventDefault(); setShowCalendarModal(true); }}>{t.header.nav.calendar}</a>
               </li>
               <li className="nav-item">
                 <a href="#team" className="nav-link">{t.header.nav.team}</a>
@@ -546,7 +626,7 @@ function App() {
               ))}
             </div>
 
-            <a href="#" onClick={(e) => { e.preventDefault(); alert("Kalender module komt binnenkort online!"); }} className="bento-link">
+            <a href="#" onClick={(e) => { e.preventDefault(); setShowCalendarModal(true); }} className="bento-link">
               {t.agenda.allEvents}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -1379,6 +1459,252 @@ function App() {
               <a href="#" onClick={(e) => { e.preventDefault(); alert("Privacyverklaring (Mockup)"); }} className="policy-link">Privacyverklaring</a>
               <span style={{ color: 'var(--color-border)' }}>|</span>
               <a href="#" onClick={(e) => { e.preventDefault(); alert("Cookieverklaring (Mockup)"); }} className="policy-link">Cookieverklaring</a>
+            </div>
+          </div>
+        </div>
+      </dialog>
+
+      {/* 2030s Next-Decade School Calendar Modal */}
+      <dialog 
+        ref={calendarDialogRef} 
+        onClick={(e) => handleBackdropClick(e, setShowCalendarModal)}
+        className="calendar-dialog"
+      >
+        <div className="wizard-container">
+          <div className="wizard-modal-header">
+            <div className="wizard-title-group">
+              <span className="wizard-icon-glow">📅</span>
+              <h2>{lang === 'nl' ? 'Interactieve Kalender' : 'Interactive Calendar'}</h2>
+            </div>
+            <button onClick={() => setShowCalendarModal(false)} className="modal-close-btn">&times;</button>
+          </div>
+
+          <div className="wizard-body">
+            {/* Month Switcher & Filters */}
+            <div className="calendar-header-panel">
+              <div className="month-switcher">
+                <button 
+                  onClick={() => {
+                    if (selectedMonth > 4) {
+                      setSelectedMonth(selectedMonth - 1);
+                      setSelectedDayStr(null);
+                    }
+                  }} 
+                  className="month-switcher-btn"
+                  disabled={selectedMonth === 4}
+                  style={{ opacity: selectedMonth === 4 ? 0.3 : 1 }}
+                >
+                  ←
+                </button>
+                <span className="current-month-label">
+                  {selectedMonth === 4 && (lang === 'nl' ? 'Mei 2026' : 'May 2026')}
+                  {selectedMonth === 5 && (lang === 'nl' ? 'Juni 2026' : 'June 2026')}
+                  {selectedMonth === 6 && (lang === 'nl' ? 'Juli 2026' : 'July 2026')}
+                </span>
+                <button 
+                  onClick={() => {
+                    if (selectedMonth < 6) {
+                      setSelectedMonth(selectedMonth + 1);
+                      setSelectedDayStr(null);
+                    }
+                  }} 
+                  className="month-switcher-btn"
+                  disabled={selectedMonth === 6}
+                  style={{ opacity: selectedMonth === 6 ? 0.3 : 1 }}
+                >
+                  →
+                </button>
+              </div>
+
+              <div className="filter-chips">
+                <button 
+                  onClick={() => setCalendarFilter('all')} 
+                  className={`filter-chip ${calendarFilter === 'all' ? 'active' : ''}`}
+                >
+                  {lang === 'nl' ? 'Alles' : 'All'}
+                </button>
+                <button 
+                  onClick={() => setCalendarFilter('vacation')} 
+                  className={`filter-chip ${calendarFilter === 'vacation' ? 'active' : ''}`}
+                >
+                  <span className="dot-indicator bg-vacation"></span>
+                  {lang === 'nl' ? 'Vakantie / Vrij' : 'Holidays'}
+                </button>
+                <button 
+                  onClick={() => setCalendarFilter('study')} 
+                  className={`filter-chip ${calendarFilter === 'study' ? 'active' : ''}`}
+                >
+                  <span className="dot-indicator bg-study"></span>
+                  {lang === 'nl' ? 'Studiedagen' : 'Studiedagen'}
+                </button>
+                <button 
+                  onClick={() => setCalendarFilter('activity')} 
+                  className={`filter-chip ${calendarFilter === 'activity' ? 'active' : ''}`}
+                >
+                  <span className="dot-indicator bg-activity"></span>
+                  {lang === 'nl' ? 'Activiteiten' : 'Events'}
+                </button>
+              </div>
+            </div>
+
+            <div className="calendar-layout-container">
+              {/* Calendar Grid */}
+              <div className="calendar-grid-card">
+                <div className="calendar-weekdays-row">
+                  <span>{lang === 'nl' ? 'Ma' : 'Mo'}</span>
+                  <span>{lang === 'nl' ? 'Di' : 'Tu'}</span>
+                  <span>{lang === 'nl' ? 'Wo' : 'We'}</span>
+                  <span>{lang === 'nl' ? 'Do' : 'Th'}</span>
+                  <span>{lang === 'nl' ? 'Vr' : 'Fr'}</span>
+                  <span>{lang === 'nl' ? 'Za' : 'Sa'}</span>
+                  <span>{lang === 'nl' ? 'Zo' : 'Su'}</span>
+                </div>
+
+                <div className="calendar-dates-grid">
+                  {getDaysForMonth(selectedMonth).map((cell, idx) => {
+                    const dayEvents = calendarEvents.filter(ev => ev.date === cell.dateString);
+                    const isSelected = selectedDayStr === cell.dateString;
+                    const isToday = cell.dateString === '2026-06-02';
+                    
+                    return (
+                      <div 
+                        key={idx}
+                        onClick={() => {
+                          if (cell.isCurrentMonth) {
+                            setSelectedDayStr(isSelected ? null : cell.dateString);
+                          }
+                        }}
+                        className={`calendar-grid-cell ${!cell.isCurrentMonth ? 'outside-month' : ''} ${isToday ? 'cell-today' : ''}`}
+                        style={{
+                          borderColor: isSelected ? 'var(--color-primary)' : '',
+                          backgroundColor: isSelected ? 'var(--color-primary-light)' : '',
+                          boxShadow: isSelected ? '0 0 8px hsla(var(--primary-h) var(--primary-s) var(--primary-l) / 0.15)' : ''
+                        }}
+                      >
+                        <span style={{ fontSize: '0.82rem' }}>{cell.day}</span>
+                        {dayEvents.length > 0 && (
+                          <div className="cell-events-dots">
+                            {dayEvents.map(ev => (
+                              <span 
+                                key={ev.id} 
+                                className={`cell-dot bg-${ev.category}`}
+                                title={ev.title}
+                              />
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Sidebar Agenda */}
+              <div className="calendar-agenda-panel">
+                <div>
+                  <h4 style={{ fontSize: '1rem', marginBottom: '0.5rem', fontFamily: 'var(--font-display)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span>{lang === 'nl' ? 'Agenda & Info' : 'Agenda'}</span>
+                    {selectedDayStr && (
+                      <button 
+                        onClick={() => setSelectedDayStr(null)} 
+                        style={{ background: 'none', border: 'none', color: 'var(--color-primary)', fontSize: '0.72rem', fontWeight: 'bold', cursor: 'pointer' }}
+                      >
+                        {lang === 'nl' ? 'Reset filter' : 'Reset filter'}
+                      </button>
+                    )}
+                  </h4>
+                  
+                  <div className="agenda-items-wrapper">
+                    {(() => {
+                      let filtered = calendarEvents;
+                      if (calendarFilter !== 'all') {
+                        filtered = filtered.filter(ev => ev.category === calendarFilter);
+                      }
+                      if (selectedDayStr) {
+                        filtered = filtered.filter(ev => ev.date === selectedDayStr);
+                      } else {
+                        filtered = filtered.filter(ev => {
+                          const evDate = new Date(ev.date);
+                          return evDate.getMonth() === selectedMonth;
+                        });
+                      }
+
+                      if (filtered.length === 0) {
+                        return (
+                          <div style={{ textAlign: 'center', padding: '2rem 1rem', color: 'var(--color-text-muted)', fontSize: '0.85rem' }}>
+                            {lang === 'nl' ? 'Geen evenementen gevonden voor deze selectie.' : 'No events scheduled for this selection.'}
+                          </div>
+                        );
+                      }
+
+                      return filtered.map(ev => (
+                        <div key={ev.id} className="calendar-agenda-item">
+                          <span className={`agenda-category-bar bg-${ev.category}`} />
+                          <div className="agenda-item-details">
+                            <span className="agenda-item-title">{ev.title}</span>
+                            <span className="agenda-item-desc">{ev.desc}</span>
+                          </div>
+                          <span className="agenda-item-time">{ev.time}</span>
+                        </div>
+                      ));
+                    })()}
+                  </div>
+                </div>
+
+                {/* Smart Sync Box */}
+                <div className="calendar-sync-box">
+                  <div className="sync-glow-effect"></div>
+                  <div className="sync-header">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+                    </svg>
+                    <span>{lang === 'nl' ? 'Directe Smart-Sync' : 'Direct Smart-Sync'}</span>
+                  </div>
+                  <p className="sync-description">
+                    {lang === 'nl'
+                      ? 'Koppel de schoolkalender direct met uw persoonlijke agenda (Google, Apple, Outlook) voor automatische realtime updates.'
+                      : 'Sync school schedules directly to your personal calendar (Google, Apple, Outlook) for automated real-time updates.'}
+                  </p>
+                  
+                  <div className="sync-button-container">
+                    {syncState === 'idle' && (
+                      <button onClick={handleStartCalendarSync} className="btn-sync">
+                        <span>📲</span> {lang === 'nl' ? 'Koppel met telefoon' : 'Sync with phone'}
+                      </button>
+                    )}
+                    {syncState === 'syncing' && (
+                      <button className="btn-sync syncing" disabled>
+                        <svg className="sync-spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                          <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.2)"></circle>
+                          <path d="M12 2a10 10 0 0 1 10 10" stroke="#ffffff"></path>
+                        </svg>
+                        <span>{lang === 'nl' ? 'Koppelen...' : 'Syncing...'}</span>
+                      </button>
+                    )}
+                    {syncState === 'synced' && (
+                      <button className="btn-sync synced" disabled>
+                        <span>✅</span> {lang === 'nl' ? 'Gekoppeld!' : 'Synced!'}
+                      </button>
+                    )}
+                    {syncState === 'synced' && (
+                      <span className="sync-status-text">
+                        {lang === 'nl' ? 'Live updates actief' : 'Live updates active'}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="wizard-footer" style={{ padding: '1rem 2rem', backgroundColor: 'var(--color-bg)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.72rem', color: 'var(--color-text-muted)', width: '100%' }}>
+              <span>Basisschool Heilige Familie Schoten • Kalender-versie 2026.3</span>
+              <div style={{ display: 'flex', gap: '0.75rem' }}>
+                <a href="#" onClick={(e) => { e.preventDefault(); alert("Help & Integratiehandleiding (Mockup)"); }} className="policy-link">Integratie-Help</a>
+                <span>•</span>
+                <a href="#" onClick={(e) => { e.preventDefault(); setShowCalendarModal(false); }} className="policy-link">{lang === 'nl' ? 'Sluiten' : 'Close'}</a>
+              </div>
             </div>
           </div>
         </div>
