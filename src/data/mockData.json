@@ -1,0 +1,216 @@
+{
+  "nl": {
+    "header": {
+      "schoolName": "Basisschool Heilige Familie",
+      "slogan": "Kleine school, groot hart",
+      "nav": {
+        "home": "Home",
+        "school": "Onze school",
+        "practical": "Praktisch",
+        "calendar": "Kalender",
+        "team": "Team",
+        "contact": "Contact"
+      },
+      "ctaTour": "Rondleiding aanvragen",
+      "ctaContact": "Contacteer ons"
+    },
+    "hero": {
+      "title": "Samen groeien, elke dag een beetje meer.",
+      "text": "Basisschool Heilige Familie is een warme plek waar elk kind zich gezien, gekend en gewaardeerd voelt. We leren met hoofd, hart en handen in een veilige omgeving vol vertrouwen.",
+      "ctaWelcome": "Welkom in onze school",
+      "ctaVideo": "Bekijk ons filmpje"
+    },
+    "practical": {
+      "title": "Praktische info",
+      "moreInfo": "Meer praktische informatie",
+      "hoursTitle": "Schooluren",
+      "hoursValue": "8u30 - 15u30",
+      "careTitle": "Opvang",
+      "careValue": "7u00 - 8u15\n15u30 - 18u00",
+      "addressTitle": "Adres",
+      "addressValue": "Kloosterstraat 6\n9250 Waasmunster"
+    },
+    "agenda": {
+      "title": "Agenda",
+      "allEvents": "Bekijk volledige kalender",
+      "events": [
+        {
+          "id": "event-1",
+          "day": "27",
+          "month": "MEI",
+          "title": "Pedagogische studiedag",
+          "subtitle": "Leerlingen vrij",
+          "time": "Hele dag"
+        },
+        {
+          "id": "event-2",
+          "day": "06",
+          "month": "JUN",
+          "title": "Schoolfeest",
+          "subtitle": "Meer info volgt",
+          "time": "Vanaf 16:00"
+        },
+        {
+          "id": "event-3",
+          "day": "16",
+          "month": "JUN",
+          "title": "Facultatieve verlofdag",
+          "subtitle": "School gesloten",
+          "time": "Hele dag"
+        }
+      ]
+    },
+    "team": {
+      "title": "Ons team",
+      "allTeam": "Bekijk alle teamleden",
+      "defaultQuote": "We zetten elke dag samen ons beste beentje voor voor de groei en het geluk van elk kind. ❤️",
+      "members": [
+        {
+          "name": "Juf Sofie",
+          "role": "Directie",
+          "quote": "Als directie ben ik enorm trots op onze warme school community. Samen bouwen we aan de toekomst!"
+        },
+        {
+          "name": "Meester Tom",
+          "role": "Lager onderwijs",
+          "quote": "Kennis en plezier gaan hier hand in hand. Elke dag in het lager onderwijs is een ontdekkingsreis."
+        },
+        {
+          "name": "Juf Lien",
+          "role": "Kleuteronderwijs",
+          "quote": "Bij de kleuters leggen we de basis met verwondering en spelend leren. Ieder kind straalt hier op zijn eigen manier."
+        },
+        {
+          "name": "Juf Anke",
+          "role": "Zorgcoördinator",
+          "quote": "Zorg op maat voor ieder kind, want elke kleine stap is er één van grote betekenis."
+        }
+      ]
+    },
+    "pillars": [
+      {
+        "title": "Warme school",
+        "description": "Een plek waar elk kind zich thuis voelt."
+      },
+      {
+        "title": "Sterk in groei",
+        "description": "We stimuleren talenten en zelfvertrouwen."
+      },
+      {
+        "title": "Samen betrokken",
+        "description": "Ouders, team en kinderen samen sterk."
+      },
+      {
+        "title": "Respect voor iedereen",
+        "description": "Met zorg voor elkaar en onze omgeving."
+      }
+    ]
+  },
+  "en": {
+    "header": {
+      "schoolName": "Holy Family Primary School",
+      "slogan": "Small school, big heart",
+      "nav": {
+        "home": "Home",
+        "school": "Our school",
+        "practical": "Practical info",
+        "calendar": "Calendar",
+        "team": "Team",
+        "contact": "Contact"
+      },
+      "ctaTour": "Request a tour",
+      "ctaContact": "Contact us"
+    },
+    "hero": {
+      "title": "Growing together, a little more every day.",
+      "text": "Holy Family Primary School is a warm place where every child feels seen, known and valued. We learn with head, heart and hands in a safe environment full of trust.",
+      "ctaWelcome": "Welcome to our school",
+      "ctaVideo": "Watch our video"
+    },
+    "practical": {
+      "title": "Practical Info",
+      "moreInfo": "More practical info",
+      "hoursTitle": "School Hours",
+      "hoursValue": "8:30 AM - 3:30 PM",
+      "careTitle": "Childcare",
+      "careValue": "7:00 AM - 8:15 AM\n3:30 PM - 6:00 PM",
+      "addressTitle": "Address",
+      "addressValue": "Kloosterstraat 6\n9250 Waasmunster"
+    },
+    "agenda": {
+      "title": "Calendar",
+      "allEvents": "View full calendar",
+      "events": [
+        {
+          "id": "event-1",
+          "day": "27",
+          "month": "MAY",
+          "title": "Pedagogical study day",
+          "subtitle": "Students off",
+          "time": "All day"
+        },
+        {
+          "id": "event-2",
+          "day": "06",
+          "month": "JUN",
+          "title": "School festival",
+          "subtitle": "More details soon",
+          "time": "From 4:00 PM"
+        },
+        {
+          "id": "event-3",
+          "day": "16",
+          "month": "JUN",
+          "title": "Facultative day off",
+          "subtitle": "School closed",
+          "time": "All day"
+        }
+      ]
+    },
+    "team": {
+      "title": "Our Team",
+      "allTeam": "View all staff",
+      "defaultQuote": "We put our best foot forward every day for the growth and happiness of every child. ❤️",
+      "members": [
+        {
+          "name": "Teacher Sofie",
+          "role": "Principal",
+          "quote": "As principal, I am immensely proud of our warm school community. Together we build the future!"
+        },
+        {
+          "name": "Teacher Tom",
+          "role": "Primary School",
+          "quote": "Knowledge and fun go hand in hand here. Every day in primary education is a journey of discovery."
+        },
+        {
+          "name": "Teacher Lien",
+          "role": "Kindergarten",
+          "quote": "In kindergarten we lay the foundation with wonder and play-based learning. Every child shines in their own way."
+        },
+        {
+          "name": "Teacher Anke",
+          "role": "Care Coordinator",
+          "quote": "Tailored care for every child, because every small step is one of great significance."
+        }
+      ]
+    },
+    "pillars": [
+      {
+        "title": "Warm school",
+        "description": "A place where every child feels at home."
+      },
+      {
+        "title": "Strong in growth",
+        "description": "We stimulate talents and self-confidence."
+      },
+      {
+        "title": "Together involved",
+        "description": "Parents, team and children strong together."
+      },
+      {
+        "title": "Respect for everyone",
+        "description": "Caring for each other and our environment."
+      }
+    ]
+  }
+}
