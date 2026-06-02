@@ -12,6 +12,7 @@ function App() {
   const [showContactModal, setShowContactModal] = useState(false);
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [showSubpageModal, setShowSubpageModal] = useState(false);
+  const [showEnrollmentWizard, setShowEnrollmentWizard] = useState(false);
   const [subpageContent, setSubpageContent] = useState({ title: '', text: '' });
   
   // Navigation Dropdown states
@@ -22,11 +23,24 @@ function App() {
   const [tourSubmitted, setTourSubmitted] = useState(false);
   const [contactSubmitted, setContactSubmitted] = useState(false);
 
+  // Enrollment Wizard States (Futuristic 2030s Dashboard)
+  const [enrollmentStep, setEnrollmentStep] = useState(1);
+  const [childBirthDate, setChildBirthDate] = useState('2024-03-15');
+  const [hasSiblingPriority, setHasSiblingPriority] = useState(false);
+  const [childFirstName, setChildFirstName] = useState('');
+  const [childLastName, setChildLastName] = useState('');
+  const [parentName, setParentName] = useState('');
+  const [parentEmail, setParentEmail] = useState('');
+  const [parentPhone, setParentPhone] = useState('');
+  const [passId, setPassId] = useState('');
+  const [passAddedToWallet, setPassAddedToWallet] = useState(false);
+
   // Modal DOM references
   const tourDialogRef = useRef(null);
   const contactDialogRef = useRef(null);
   const videoDialogRef = useRef(null);
   const subpageDialogRef = useRef(null);
+  const enrollmentDialogRef = useRef(null);
 
   // Content helpers
   const t = mockData[lang];
@@ -66,6 +80,16 @@ function App() {
     }
   }, [showSubpageModal]);
 
+  useEffect(() => {
+    if (showEnrollmentWizard) {
+      enrollmentDialogRef.current?.showModal();
+    } else {
+      enrollmentDialogRef.current?.close();
+      setEnrollmentStep(1);
+      setPassAddedToWallet(false);
+    }
+  }, [showEnrollmentWizard]);
+
   const openSubpage = (titleKey, textKey) => {
     setSubpageContent({
       title: t.subpages[titleKey],
@@ -85,6 +109,104 @@ function App() {
     ) {
       setModalState(false);
     }
+  };
+
+  // Flemish school entry dates (Instapdata) calculator
+  const getInstapDetails = (birthDateString) => {
+    if (!birthDateString) return null;
+    const birthDate = new Date(birthDateString);
+    if (isNaN(birthDate.getTime())) return null;
+
+    // Calculate when they turn 2.5 years (30 months)
+    const turn25Date = new Date(birthDate);
+    turn25Date.setMonth(turn25Date.getMonth() + 30);
+
+    // Calculate when they turn 3 years (36 months)
+    const turn3Date = new Date(birthDate);
+    turn3Date.setMonth(turn3Date.getMonth() + 36);
+
+    const birthYear = birthDate.getFullYear();
+    const entrySchoolYear = birthYear + 2; // e.g. born in 2024 -> starts school in 2026/2027
+    
+    const yearA = entrySchoolYear;
+    const yearB = entrySchoolYear + 1;
+    
+    // Flemish instapdata approximations for schoolyear [entrySchoolYear]-[entrySchoolYear+1]
+    const instapDates = [
+      { name: '1 September ' + yearA, date: new Date(yearA, 8, 1) }, 
+      { name: 'Schooldag na Herfstvakantie (ca. 9 November ' + yearA + ')', date: new Date(yearA, 10, 9) }, 
+      { name: 'Schooldag na Kerstvakantie (ca. 4 Januari ' + yearB + ')', date: new Date(yearB, 0, 4) }, 
+      { name: '1 Februari ' + yearB, date: new Date(yearB, 1, 1) }, 
+      { name: 'Schooldag na Krokusvakantie (ca. 22 Februari ' + yearB + ')', date: new Date(yearB, 1, 22) },
+      { name: 'Schooldag na Paasvakantie (ca. 19 April ' + yearB + ')', date: new Date(yearB, 3, 19) }, 
+      { name: 'Schooldag na Hemelvaart (ca. 24 Mei ' + yearB + ')', date: new Date(yearB, 4, 24) } 
+    ];
+
+    // Find the first instapdate on or after the 2.5-year birthday
+    let firstInstap = null;
+    for (const instap of instapDates) {
+      if (instap.date >= turn25Date) {
+        firstInstap = instap;
+        break;
+      }
+    }
+
+    if (!firstInstap) {
+      firstInstap = {
+        name: '3e verjaardag (direct instappen): ' + turn3Date.toLocaleDateString('nl-BE', { day: 'numeric', month: 'long', year: 'numeric' }),
+        date: turn3Date
+      };
+    }
+
+    // Determine the school year
+    let schoolYearLabel = `${yearA}-${yearB}`;
+    if (turn25Date > instapDates[6].date) {
+      schoolYearLabel = `${yearB}-${yearB + 1}`;
+    }
+
+    // Flag if they are born in Oct/Nov/Dec 2024
+    const isLate2024 = birthYear === 2024 && birthDate.getMonth() >= 9; // October, November, December
+
+    return {
+      turn25Formatted: turn25Date.toLocaleDateString('nl-BE', { day: 'numeric', month: 'long', year: 'numeric' }),
+      instapFormatted: firstInstap.name,
+      schoolYear: schoolYearLabel,
+      isLate2024,
+      birthYear
+    };
+  };
+
+  // 3D Tilt mouse move events for Apple Wallet Pass Card
+  const handlePassMouseMove = (e) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const px = (x / rect.width) * 100;
+    const py = (y / rect.height) * 100;
+    card.style.setProperty('--mouse-x', `${px}%`);
+    card.style.setProperty('--mouse-y', `${py}%`);
+    
+    // Max 10 degrees tilt rotation
+    const rotateX = -((y - rect.height / 2) / (rect.height / 2)) * 10;
+    const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 10;
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+  };
+
+  const handlePassMouseLeave = (e) => {
+    const card = e.currentTarget;
+    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+    card.style.setProperty('--mouse-x', '50%');
+    card.style.setProperty('--mouse-y', '50%');
+  };
+
+  const handleGeneratePass = (e) => {
+    e.preventDefault();
+    // Generate a random 5 digit serial number
+    const randomSerial = Math.floor(10000 + Math.random() * 90000);
+    setPassId(`HF-2026-${randomSerial}`);
+    setEnrollmentStep(4);
   };
 
   return (
@@ -149,7 +271,7 @@ function App() {
                     <a href="#hours" className="dropdown-item" onClick={() => setPracticalDropdownOpen(false)}>Schooluren</a>
                     <a href="#hours" className="dropdown-item" onClick={() => setPracticalDropdownOpen(false)}>Buitenschoolse Opvang</a>
                     <a href="#reglement" className="dropdown-item" onClick={(e) => { e.preventDefault(); setPracticalDropdownOpen(false); openSubpage('reglementTitle', 'reglementText'); }}>Schoolreglement</a>
-                    <a href="#inschrijvingen" className="dropdown-item" onClick={(e) => { e.preventDefault(); setPracticalDropdownOpen(false); openSubpage('inschrijfTitle', 'inschrijfText'); }}>Inschrijvingen</a>
+                    <a href="#inschrijvingen" className="dropdown-item" onClick={(e) => { e.preventDefault(); setPracticalDropdownOpen(false); setShowEnrollmentWizard(true); }}>Inschrijvingen</a>
                   </div>
                 )}
               </li>
@@ -694,6 +816,571 @@ function App() {
         </div>
         <div style={{ whiteSpace: 'pre-line', color: 'var(--color-text-muted)', lineHeight: '1.6', fontSize: '0.98rem' }}>
           {subpageContent.text}
+        </div>
+      </dialog>
+
+      {/* 2030s Next-Decade Enrollment Wizard Modal */}
+      <dialog 
+        ref={enrollmentDialogRef} 
+        onClick={(e) => handleBackdropClick(e, setShowEnrollmentWizard)}
+        className="wizard-dialog"
+      >
+        <div className="wizard-container">
+          <div className="wizard-modal-header">
+            <div className="wizard-title-group">
+              <span className="wizard-icon-glow">✨</span>
+              <h2>{lang === 'nl' ? 'Inschrijvingswizard 2030+' : 'Enrollment Wizard 2030+'}</h2>
+            </div>
+            <div className="wizard-steps-indicator">
+              <div className={`step-dot ${enrollmentStep >= 1 ? (enrollmentStep > 1 ? 'completed' : 'active') : ''}`}>1</div>
+              <div className={`step-line ${enrollmentStep >= 2 ? 'active' : ''}`}></div>
+              <div className={`step-dot ${enrollmentStep >= 2 ? (enrollmentStep > 2 ? 'completed' : 'active') : ''}`}>2</div>
+              <div className={`step-line ${enrollmentStep >= 3 ? 'active' : ''}`}></div>
+              <div className={`step-dot ${enrollmentStep >= 3 ? (enrollmentStep > 3 ? 'completed' : 'active') : ''}`}>3</div>
+              <div className={`step-line ${enrollmentStep >= 4 ? 'active' : ''}`}></div>
+              <div className={`step-dot ${enrollmentStep >= 4 ? 'active' : ''}`}>4</div>
+            </div>
+            <button onClick={() => setShowEnrollmentWizard(false)} className="modal-close-btn">&times;</button>
+          </div>
+
+          <div className="wizard-body">
+            {/* Step 1: Flemish Entry Calculator */}
+            {enrollmentStep === 1 && (
+              <div className="wizard-grid-layout">
+                <div>
+                  <h3 style={{ fontSize: '1.2rem', marginBottom: '0.75rem', fontFamily: 'var(--font-display)' }}>
+                    {lang === 'nl' ? 'Stap 1: Bereken de startdatum' : 'Step 1: Calculate Start Date'}
+                  </h3>
+                  <p style={{ fontSize: '0.88rem', marginBottom: '1.5rem' }}>
+                    {lang === 'nl' 
+                      ? 'In Vlaanderen mogen kleuters vanaf 2,5 jaar op vaste instapdata starten. Bereken hier direct wanneer uw kind mag starten.'
+                      : 'In Flanders, toddlers can start school on fixed entry dates starting from 2.5 years of age. Calculate your child\'s entry date here.'}
+                  </p>
+                  
+                  <div className="form-group">
+                    <label htmlFor="child-birthdate">{lang === 'nl' ? 'Geboortedatum van uw kind' : 'Birthdate of your child'}</label>
+                    <input 
+                      type="date" 
+                      id="child-birthdate" 
+                      className="form-control" 
+                      value={childBirthDate} 
+                      onChange={(e) => setChildBirthDate(e.target.value)} 
+                    />
+                  </div>
+
+                  <div className="form-group" style={{ marginTop: '1.25rem' }}>
+                    <div 
+                      className="toggle-switch-wrapper" 
+                      onClick={() => setHasSiblingPriority(!hasSiblingPriority)}
+                    >
+                      <div className="toggle-switch-info">
+                        <span className="toggle-switch-label">{lang === 'nl' ? 'Voorrangsstatus' : 'Priority Status'}</span>
+                        <span className="toggle-switch-description">
+                          {lang === 'nl' ? 'Is er al een broer of zus ingeschreven?' : 'Is a sibling already enrolled?'}
+                        </span>
+                      </div>
+                      <div className={`switch-input ${hasSiblingPriority ? 'checked' : ''}`}></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  {/* Live Calculation Output Widget */}
+                  {(() => {
+                    const details = getInstapDetails(childBirthDate);
+                    if (!details) return null;
+                    return (
+                      <div className="sidebar-preview-panel">
+                        <div>
+                          <div className="calculator-title">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                              <circle cx="12" cy="12" r="10"></circle>
+                              <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <span>{lang === 'nl' ? 'Instap-Berekening' : 'Flemish Start Dates'}</span>
+                          </div>
+
+                          <div className="calculator-stats" style={{ margin: '1rem 0' }}>
+                            <div className="stat-row">
+                              <span className="stat-label">{lang === 'nl' ? 'Wordt 2,5 jaar op' : 'Turns 2.5 on'}</span>
+                              <span className="stat-value">{details.turn25Formatted}</span>
+                            </div>
+                            <div className="stat-row">
+                              <span className="stat-label">{lang === 'nl' ? 'Eerste instapdatum' : 'First possible entry'}</span>
+                              <span className="stat-value" style={{ color: 'var(--color-primary)' }}>{details.instapFormatted}</span>
+                            </div>
+                            <div className="stat-row">
+                              <span className="stat-label">{lang === 'nl' ? 'Doel-schooljaar' : 'School Year'}</span>
+                              <span className="stat-value">{details.schoolYear}</span>
+                            </div>
+                            <div className="stat-row">
+                              <span className="stat-label">{lang === 'nl' ? 'Voorrangsregeling' : 'Priority status'}</span>
+                              <span className="stat-value" style={{ color: hasSiblingPriority ? 'green' : 'var(--color-text-muted)' }}>
+                                {hasSiblingPriority 
+                                  ? (lang === 'nl' ? 'Ja (Broer/Zus)' : 'Yes (Sibling)')
+                                  : (lang === 'nl' ? 'Nee (Standaard)' : 'No (Standard)')}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {details.isLate2024 && (
+                          <div className="wizard-alert">
+                            <span className="wizard-alert-icon">⚠️</span>
+                            <div>
+                              <strong>{lang === 'nl' ? 'Belangrijke opmerking:' : 'Important notice:'}</strong><br/>
+                              {lang === 'nl'
+                                ? 'Uw kind is geboren in het najaar van 2024. Hoewel de instap pas in schooljaar 2027-2028 is, moet uw kind NU al worden aangemeld via het digitaal aanmeldsysteem!'
+                                : 'Your child is born in late 2024. Although school starts in schoolyear 2027-2028, you MUST register them now during the current digital campaign!'}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
+                </div>
+              </div>
+            )}
+
+            {/* Step 2: Contact Form */}
+            {enrollmentStep === 2 && (
+              <div className="wizard-grid-layout">
+                <div>
+                  <h3 style={{ fontSize: '1.2rem', marginBottom: '0.75rem', fontFamily: 'var(--font-display)' }}>
+                    {lang === 'nl' ? 'Stap 2: Contact- & Kindgegevens' : 'Step 2: Contact & Child Details'}
+                  </h3>
+                  <p style={{ fontSize: '0.88rem', marginBottom: '1.5rem' }}>
+                    {lang === 'nl'
+                      ? 'Vul de gegevens in om de gepersonaliseerde digitale pas en tijdlijn te genereren.'
+                      : 'Fill in the details to generate the personalized digital admission pass and registration timeline.'}
+                  </p>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                    <div className="form-group">
+                      <label htmlFor="child-firstname">{lang === 'nl' ? 'Voornaam kind' : "Child's First Name"}</label>
+                      <input 
+                        type="text" 
+                        id="child-firstname" 
+                        className="form-control" 
+                        required 
+                        value={childFirstName}
+                        onChange={(e) => setChildFirstName(e.target.value)}
+                        placeholder="bv. Lucca" 
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="child-lastname">{lang === 'nl' ? 'Achternaam kind' : "Child's Last Name"}</label>
+                      <input 
+                        type="text" 
+                        id="child-lastname" 
+                        className="form-control" 
+                        required 
+                        value={childLastName}
+                        onChange={(e) => setChildLastName(e.target.value)}
+                        placeholder="bv. Devos" 
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="parent-name">{lang === 'nl' ? 'Volledige naam ouder / voogd' : 'Parent / Guardian Full Name'}</label>
+                    <input 
+                      type="text" 
+                      id="parent-name" 
+                      className="form-control" 
+                      required 
+                      value={parentName}
+                      onChange={(e) => setParentName(e.target.value)}
+                      placeholder="bv. Marie Devos" 
+                    />
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                    <div className="form-group">
+                      <label htmlFor="parent-email">E-mailadres</label>
+                      <input 
+                        type="email" 
+                        id="parent-email" 
+                        className="form-control" 
+                        required 
+                        value={parentEmail}
+                        onChange={(e) => setParentEmail(e.target.value)}
+                        placeholder="bv. marie@email.be" 
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="parent-phone">{lang === 'nl' ? 'Telefoonnummer' : 'Phone Number'}</label>
+                      <input 
+                        type="tel" 
+                        id="parent-phone" 
+                        className="form-control" 
+                        required 
+                        value={parentPhone}
+                        onChange={(e) => setParentPhone(e.target.value)}
+                        placeholder="bv. +32 470 00 00 00" 
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  {/* Live preview banner */}
+                  <div className="sidebar-preview-panel" style={{ justifyContent: 'center', gap: '1rem' }}>
+                    <div className="preview-avatar-banner">
+                      <div className="preview-avatar-circle">🏫</div>
+                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <span style={{ fontWeight: '800', color: 'var(--color-primary)', fontSize: '0.95rem' }}>HF Heilige Familie</span>
+                        <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Laaglandlei 20, Schoten</span>
+                      </div>
+                    </div>
+                    <div className="preview-quote-box">
+                      "Groeien doe je samen. Wij kijken er enorm naar uit om u en uw kind binnenkort te mogen verwelkomen op onze school!"
+                    </div>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)' }}>
+                      📧 secretariaat@hfamilie.be<br/>
+                      📞 +32 3 658 51 95
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Step 3: Interactive Timeline & Registration Steps */}
+            {enrollmentStep === 3 && (
+              <div>
+                <h3 style={{ fontSize: '1.2rem', marginBottom: '0.75rem', fontFamily: 'var(--font-display)' }}>
+                  {lang === 'nl' ? 'Stap 3: Uw Aanmeldingstijdlijn' : 'Step 3: Your Registration Timeline'}
+                </h3>
+                <p style={{ fontSize: '0.88rem', marginBottom: '1.5rem' }}>
+                  {lang === 'nl'
+                    ? 'Op basis van uw antwoorden is hier uw officiële aanmeldings- en inschrijvingsschema voor Schoten:'
+                    : 'Based on your selections, here is your official registration and enrollment timeline for Schoten:'}
+                </p>
+
+                <div className="interactive-timeline">
+                  {/* Step 1 in Timeline */}
+                  <div className="timeline-step active">
+                    <div className="timeline-icon-box">1</div>
+                    <div className="timeline-content-box">
+                      <div className="timeline-step-header">
+                        <span className="timeline-step-title">{lang === 'nl' ? 'Aanmelden (Digitaal Voorkeurregistratie)' : 'Apply (Digital Preference)'}</span>
+                        <span className="timeline-step-badge">{lang === 'nl' ? 'Stap 1' : 'Step 1'}</span>
+                      </div>
+                      <p className="timeline-step-desc">
+                        {lang === 'nl' 
+                          ? 'Meld uw kind eerst digitaal aan via schoten.be/aanmelden om gelijke kansen te garanderen en wachtrijen te vermijden. Dit geldt voor iedereen.'
+                          : 'First, apply digitally on schoten.be/aanmelden to ensure equal opportunities and avoid physical queues.'}
+                      </p>
+                      <div className="timeline-step-date">
+                        <span>📅</span>
+                        <span>
+                          {hasSiblingPriority 
+                            ? (lang === 'nl' ? '19 januari 2026 t.e.m. 30 januari 2026' : 'January 19, 2026 to January 30, 2026')
+                            : (lang === 'nl' ? '24 februari 2026 t.e.m. 17 maart 2026' : 'February 24, 2026 to March 17, 2026')}
+                        </span>
+                      </div>
+                      <a 
+                        href="https://www.schoten.be/aanmelden" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="btn btn-outline" 
+                        style={{ fontSize: '0.78rem', padding: '0.35rem 0.85rem', marginTop: '0.75rem', display: 'inline-flex', borderRadius: '8px' }}
+                      >
+                        {lang === 'nl' ? 'Meld nu aan via schoten.be' : 'Register at schoten.be'} 
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginLeft: '0.25rem' }}>
+                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                          <polyline points="15 3 21 3 21 9"></polyline>
+                          <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Step 2 in Timeline */}
+                  <div className="timeline-step">
+                    <div className="timeline-icon-box">2</div>
+                    <div className="timeline-content-box">
+                      <div className="timeline-step-header">
+                        <span className="timeline-step-title">{lang === 'nl' ? 'Toewijzingsbericht (Resultaat)' : 'Allocation (Result)'}</span>
+                        <span className="timeline-step-badge">{lang === 'nl' ? 'Stap 2' : 'Step 2'}</span>
+                      </div>
+                      <p className="timeline-step-desc">
+                        {lang === 'nl'
+                          ? 'U ontvangt een schriftelijke en digitale melding van de school die aan uw kind is toegewezen.'
+                          : 'You will receive a written and digital notification of the school allocated to your child.'}
+                      </p>
+                      <div className="timeline-step-date">
+                        <span>📅</span>
+                        <span>{lang === 'nl' ? 'Eind april 2026 (digitaal & per post)' : 'Late April 2026 (email & mail)'}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Step 3 in Timeline */}
+                  <div className="timeline-step">
+                    <div className="timeline-icon-box">3</div>
+                    <div className="timeline-content-box">
+                      <div className="timeline-step-header">
+                        <span className="timeline-step-title">{lang === 'nl' ? 'Officiële Inschrijving (Definitief)' : 'Official Enrollment (Final)'}</span>
+                        <span className="timeline-step-badge">{lang === 'nl' ? 'Stap 3' : 'Step 3'}</span>
+                      </div>
+                      <p className="timeline-step-desc">
+                        {lang === 'nl'
+                          ? 'Schrijf uw kind officieel in bij Basisschool Heilige Familie na ontvangst van uw uitnodiging. Na deze datum vervalt uw inschrijvingsrecht.'
+                          : 'Officially enroll your child at Holy Family after receiving your invitation. After this deadline, your enrollment right expires.'}
+                      </p>
+                      <div className="timeline-step-date">
+                        <span>📅</span>
+                        <span>
+                          {hasSiblingPriority 
+                            ? (lang === 'nl' ? '9 februari 2026 t.e.m. 6 maart 2026' : 'February 9, 2026 to March 6, 2026')
+                            : (lang === 'nl' ? '27 april 2026 t.e.m. 12 mei 2026' : 'April 27, 2026 to May 12, 2026')}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Step 4: Digital Wallet Pass Generator (Success) */}
+            {enrollmentStep === 4 && (
+              <div style={{ textAlign: 'center' }}>
+                <h3 style={{ fontSize: '1.25rem', marginBottom: '0.25rem', fontFamily: 'var(--font-display)' }}>
+                  {lang === 'nl' ? '🎉 Uw Inschrijvingspas is gereed!' : '🎉 Your Enrollment Pass is Ready!'}
+                </h3>
+                <p style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)', marginBottom: '1.25rem' }}>
+                  {lang === 'nl'
+                    ? 'Beweeg uw muis over de pas voor een 3D parallax-effect.'
+                    : 'Hover/move your mouse over the card to test the interactive 3D parallax.'}
+                </p>
+
+                {/* 3D Tilted Wallet Pass */}
+                <div className="wallet-pass-perspective">
+                  <div 
+                    className="wallet-pass-card"
+                    onMouseMove={handlePassMouseMove}
+                    onMouseLeave={handlePassMouseLeave}
+                  >
+                    {/* Inner radial gradient shine */}
+                    <div className="pass-card-glow-overlay"></div>
+                    
+                    {/* Real logo watermark backdrop */}
+                    <svg className="pass-emblem-watermark" viewBox="0 0 120 120" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M20 90 Q30 45 40 40 Q44 38 48 44 Q50 50 44 60 Q55 35 62 33 Q66 31 68 38 Q68 46 56 58 Q72 32 78 32 Q83 32 83 40 Q80 50 68 64 Q82 38 88 42 Q92 46 82 62 C96 52 100 58 88 74 L75 92 L40 100 Z" />
+                    </svg>
+
+                    <div className="pass-header">
+                      <div className="pass-logo">
+                        <img src={schoolLogo} alt="Logo" />
+                        <div className="pass-logo-text">
+                          <span>HEILIGE FAMILIE</span>
+                          <span className="pass-logo-slogan">{lang === 'nl' ? 'Basisschool Schoten' : 'Schoten Primary School'}</span>
+                        </div>
+                      </div>
+                      <div className="pass-type-badge">{lang === 'nl' ? 'Aanmeldpas' : 'Pass 2026'}</div>
+                    </div>
+
+                    <div className="pass-body">
+                      <div className="pass-info-grid">
+                        <div className="pass-field">
+                          <span className="pass-label">{lang === 'nl' ? 'Kind' : 'Student'}</span>
+                          <span className="pass-value" title={`${childFirstName} ${childLastName}`}>{childFirstName} {childLastName}</span>
+                        </div>
+                        <div className="pass-field">
+                          <span className="pass-label">{lang === 'nl' ? 'Geboortedatum' : 'Birthdate'}</span>
+                          <span className="pass-value">{new Date(childBirthDate).toLocaleDateString('nl-BE', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                        </div>
+                      </div>
+
+                      <div className="pass-info-grid">
+                        <div className="pass-field">
+                          <span className="pass-label">{lang === 'nl' ? 'Instapdatum' : 'First Start Date'}</span>
+                          {(() => {
+                            const details = getInstapDetails(childBirthDate);
+                            return <span className="pass-value" style={{ color: 'var(--color-accent)' }}>{details ? details.instapFormatted.split(' (')[0] : ''}</span>;
+                          })()}
+                        </div>
+                        <div className="pass-field">
+                          <span className="pass-label">{lang === 'nl' ? 'Schooljaar' : 'School Year'}</span>
+                          {(() => {
+                            const details = getInstapDetails(childBirthDate);
+                            return <span className="pass-value">{details ? details.schoolYear : ''}</span>;
+                          })()}
+                        </div>
+                      </div>
+
+                      <div className="pass-info-grid">
+                        <div className="pass-field">
+                          <span className="pass-label">{lang === 'nl' ? 'Voorrang' : 'Priority'}</span>
+                          <span className={`pass-value ${hasSiblingPriority ? 'priority-active' : ''}`}>
+                            {hasSiblingPriority 
+                              ? (lang === 'nl' ? 'Met voorrang' : 'Priority (Yes)') 
+                              : (lang === 'nl' ? 'Geen voorrang' : 'Standard')}
+                          </span>
+                        </div>
+                        <div className="pass-field">
+                          <span className="pass-label">{lang === 'nl' ? 'Ouder' : 'Guardian'}</span>
+                          <span className="pass-value" title={parentName}>{parentName}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="pass-barcode-section">
+                      {/* Generates standard barcode vertical lines pattern */}
+                      <svg className="pass-barcode-svg" viewBox="0 0 200 40" preserveAspectRatio="none">
+                        <rect x="0" y="0" width="4" height="40" fill="currentColor" />
+                        <rect x="8" y="0" width="2" height="40" fill="currentColor" />
+                        <rect x="12" y="0" width="6" height="40" fill="currentColor" />
+                        <rect x="20" y="0" width="1" height="40" fill="currentColor" />
+                        <rect x="24" y="0" width="4" height="40" fill="currentColor" />
+                        <rect x="30" y="0" width="2" height="40" fill="currentColor" />
+                        <rect x="36" y="0" width="8" height="40" fill="currentColor" />
+                        <rect x="48" y="0" width="1" height="40" fill="currentColor" />
+                        <rect x="52" y="0" width="3" height="40" fill="currentColor" />
+                        <rect x="60" y="0" width="6" height="40" fill="currentColor" />
+                        <rect x="70" y="0" width="2" height="40" fill="currentColor" />
+                        <rect x="74" y="0" width="4" height="40" fill="currentColor" />
+                        <rect x="80" y="0" width="1" height="40" fill="currentColor" />
+                        <rect x="86" y="0" width="8" height="40" fill="currentColor" />
+                        <rect x="98" y="0" width="2" height="40" fill="currentColor" />
+                        <rect x="104" y="0" width="4" height="40" fill="currentColor" />
+                        <rect x="112" y="0" width="1" height="40" fill="currentColor" />
+                        <rect x="116" y="0" width="6" height="40" fill="currentColor" />
+                        <rect x="126" y="0" width="2" height="40" fill="currentColor" />
+                        <rect x="130" y="0" width="4" height="40" fill="currentColor" />
+                        <rect x="138" y="0" width="8" height="40" fill="currentColor" />
+                        <rect x="150" y="0" width="1" height="40" fill="currentColor" />
+                        <rect x="154" y="0" width="4" height="40" fill="currentColor" />
+                        <rect x="160" y="0" width="2" height="40" fill="currentColor" />
+                        <rect x="166" y="0" width="6" height="40" fill="currentColor" />
+                        <rect x="176" y="0" width="1" height="40" fill="currentColor" />
+                        <rect x="180" y="0" width="4" height="40" fill="currentColor" />
+                        <rect x="188" y="0" width="2" height="40" fill="currentColor" />
+                        <rect x="194" y="0" width="6" height="40" fill="currentColor" />
+                      </svg>
+                      <span className="pass-serial">{passId}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', marginTop: '1.25rem' }}>
+                  <button 
+                    onClick={() => {
+                      setPassAddedToWallet(true);
+                      alert(lang === 'nl' ? 'Toegevoegd aan Apple Wallet!' : 'Added to Apple Wallet!');
+                    }} 
+                    className="btn btn-primary"
+                    style={{ fontSize: '0.82rem', padding: '0.5rem 1.25rem', backgroundColor: '#000000', color: '#ffffff' }}
+                  >
+                    <span>🍏</span> {passAddedToWallet ? (lang === 'nl' ? 'In Wallet!' : 'In Wallet!') : (lang === 'nl' ? 'Zet in Apple Wallet' : 'Add to Apple Wallet')}
+                  </button>
+                  <button 
+                    onClick={() => window.print()} 
+                    className="btn btn-outline"
+                    style={{ fontSize: '0.82rem', padding: '0.5rem 1.25rem' }}
+                  >
+                    🖨️ {lang === 'nl' ? 'Print paspoort' : 'Print Pass'}
+                  </button>
+                </div>
+
+                <div className="wizard-alert" style={{ backgroundColor: 'var(--color-primary-light)', borderColor: 'var(--color-primary-soft)', color: 'var(--color-primary)', marginTop: '1.5rem', textAlign: 'left' }}>
+                  <span className="wizard-alert-icon">ℹ️</span>
+                  <div style={{ fontSize: '0.78rem' }}>
+                    <strong>{lang === 'nl' ? 'Let op:' : 'Please note:'}</strong><br/>
+                    {lang === 'nl' 
+                      ? 'Dit is een samenvatting van uw aanmeldingsvoorkeur. Dit is GEEN officiële inschrijving. U dient uw kind nog steeds verplicht online aan te melden via schoten.be/aanmelden!'
+                      : 'This is a summary of your registration preference. This is NOT an official enrollment. You must still register your child online via schoten.be/aanmelden!'}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="wizard-footer">
+            <div className="wizard-actions-row">
+              {enrollmentStep > 1 && enrollmentStep < 4 ? (
+                <button 
+                  onClick={() => setEnrollmentStep(enrollmentStep - 1)} 
+                  className="btn btn-outline"
+                  style={{ padding: '0.5rem 1.25rem', fontSize: '0.85rem' }}
+                >
+                  ← {lang === 'nl' ? 'Vorige' : 'Back'}
+                </button>
+              ) : (
+                <div></div>
+              )}
+
+              {enrollmentStep === 1 && (
+                <button 
+                  onClick={() => setEnrollmentStep(2)} 
+                  className="btn btn-primary"
+                  style={{ padding: '0.5rem 1.5rem', fontSize: '0.85rem', marginLeft: 'auto' }}
+                >
+                  {lang === 'nl' ? 'Volgende' : 'Next'} →
+                </button>
+              )}
+
+              {enrollmentStep === 2 && (
+                <button 
+                  onClick={() => {
+                    if (childFirstName.trim() && childLastName.trim() && parentName.trim() && parentEmail.trim() && parentPhone.trim()) {
+                      setEnrollmentStep(3);
+                    } else {
+                      alert(lang === 'nl' ? 'Gelieve alle velden in te vullen.' : 'Please fill in all fields.');
+                    }
+                  }} 
+                  className="btn btn-primary"
+                  style={{ padding: '0.5rem 1.5rem', fontSize: '0.85rem', marginLeft: 'auto' }}
+                >
+                  {lang === 'nl' ? 'Bekijk Tijdlijn' : 'View Timeline'} →
+                </button>
+              )}
+
+              {enrollmentStep === 3 && (
+                <button 
+                  onClick={handleGeneratePass} 
+                  className="btn btn-secondary"
+                  style={{ padding: '0.5rem 1.5rem', fontSize: '0.85rem', marginLeft: 'auto' }}
+                >
+                  ✨ {lang === 'nl' ? 'Genereer Digitale Pas' : 'Generate Digital Pass'}
+                </button>
+              )}
+
+              {enrollmentStep === 4 && (
+                <button 
+                  onClick={() => {
+                    setEnrollmentStep(1);
+                    setChildFirstName('');
+                    setChildLastName('');
+                    setParentName('');
+                    setParentEmail('');
+                    setParentPhone('');
+                    setPassAddedToWallet(false);
+                  }} 
+                  className="btn btn-outline"
+                  style={{ padding: '0.5rem 1.25rem', fontSize: '0.85rem', marginLeft: 'auto' }}
+                >
+                  🔄 {lang === 'nl' ? 'Nieuwe berekening' : 'New calculation'}
+                </button>
+              )}
+            </div>
+
+            {/* Partner school board and links */}
+            <div className="partner-chips-container">
+              <a href="https://www.kovabov.be" target="_blank" rel="noopener noreferrer" className="partner-chip">Schoolbestuur KOBA Voorkempen</a>
+              <a href="#" className="partner-chip">Scholengemeenschap KBS</a>
+              <a href="https://www.leersteuncentrum-expant.be" target="_blank" rel="noopener noreferrer" className="partner-chip">Leersteuncentrum Expant</a>
+              <a href="https://www.vclb-koepel.be" target="_blank" rel="noopener noreferrer" className="partner-chip">CLB</a>
+              <a href="https://www.schoten.be" target="_blank" rel="noopener noreferrer" className="partner-chip">Gemeente Schoten</a>
+            </div>
+
+            <div className="policy-links">
+              <a href="#" onClick={(e) => { e.preventDefault(); alert("Privacyverklaring (Mockup)"); }} className="policy-link">Privacyverklaring</a>
+              <span style={{ color: 'var(--color-border)' }}>|</span>
+              <a href="#" onClick={(e) => { e.preventDefault(); alert("Cookieverklaring (Mockup)"); }} className="policy-link">Cookieverklaring</a>
+            </div>
+          </div>
         </div>
       </dialog>
 
