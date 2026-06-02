@@ -10,6 +10,8 @@ function App() {
   const [showTourModal, setShowTourModal] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
   const [showVideoModal, setShowVideoModal] = useState(false);
+  const [showSubpageModal, setShowSubpageModal] = useState(false);
+  const [subpageContent, setSubpageContent] = useState({ title: '', text: '' });
   
   // Navigation Dropdown states
   const [schoolDropdownOpen, setSchoolDropdownOpen] = useState(false);
@@ -23,6 +25,7 @@ function App() {
   const tourDialogRef = useRef(null);
   const contactDialogRef = useRef(null);
   const videoDialogRef = useRef(null);
+  const subpageDialogRef = useRef(null);
 
   // Content helpers
   const t = mockData[lang];
@@ -53,6 +56,22 @@ function App() {
       videoDialogRef.current?.close();
     }
   }, [showVideoModal]);
+
+  useEffect(() => {
+    if (showSubpageModal) {
+      subpageDialogRef.current?.showModal();
+    } else {
+      subpageDialogRef.current?.close();
+    }
+  }, [showSubpageModal]);
+
+  const openSubpage = (titleKey, textKey) => {
+    setSubpageContent({
+      title: t.subpages[titleKey],
+      text: t.subpages[textKey]
+    });
+    setShowSubpageModal(true);
+  };
 
   // Handle outside click to close modals
   const handleBackdropClick = (e, setModalState) => {
@@ -114,9 +133,9 @@ function App() {
                 </a>
                 {schoolDropdownOpen && (
                   <div style={dropdownStyles}>
-                    <a href="#visie" className="dropdown-item" onClick={() => setSchoolDropdownOpen(false)}>Visie & Missie</a>
-                    <a href="#geschiedenis" className="dropdown-item" onClick={() => setSchoolDropdownOpen(false)}>Historiek</a>
-                    <a href="#pedagogisch" className="dropdown-item" onClick={() => setSchoolDropdownOpen(false)}>Pedagogisch Project</a>
+                    <a href="#visie" className="dropdown-item" onClick={(e) => { e.preventDefault(); setSchoolDropdownOpen(false); openSubpage('visieTitle', 'visieText'); }}>Visie & Missie</a>
+                    <a href="#geschiedenis" className="dropdown-item" onClick={(e) => { e.preventDefault(); setSchoolDropdownOpen(false); openSubpage('historyTitle', 'historyText'); }}>Historiek</a>
+                    <a href="#pedagogisch" className="dropdown-item" onClick={(e) => { e.preventDefault(); setSchoolDropdownOpen(false); openSubpage('pedagoTitle', 'pedagoText'); }}>Pedagogisch Project</a>
                   </div>
                 )}
               </li>
@@ -136,9 +155,9 @@ function App() {
                 {practicalDropdownOpen && (
                   <div style={dropdownStyles}>
                     <a href="#hours" className="dropdown-item" onClick={() => setPracticalDropdownOpen(false)}>Schooluren</a>
-                    <a href="#opvang" className="dropdown-item" onClick={() => setPracticalDropdownOpen(false)}>Buitenschoolse Opvang</a>
-                    <a href="#reglement" className="dropdown-item" onClick={() => setPracticalDropdownOpen(false)}>Schoolreglement</a>
-                    <a href="#inschrijvingen" className="dropdown-item" onClick={() => setPracticalDropdownOpen(false)}>Inschrijvingen</a>
+                    <a href="#hours" className="dropdown-item" onClick={() => setPracticalDropdownOpen(false)}>Buitenschoolse Opvang</a>
+                    <a href="#reglement" className="dropdown-item" onClick={(e) => { e.preventDefault(); setPracticalDropdownOpen(false); openSubpage('reglementTitle', 'reglementText'); }}>Schoolreglement</a>
+                    <a href="#inschrijvingen" className="dropdown-item" onClick={(e) => { e.preventDefault(); setPracticalDropdownOpen(false); openSubpage('inschrijfTitle', 'inschrijfText'); }}>Inschrijvingen</a>
                   </div>
                 )}
               </li>
@@ -595,6 +614,21 @@ function App() {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
             allowFullScreen
           ></iframe>
+        </div>
+      </dialog>
+
+      {/* Subpage Info Modal */}
+      <dialog 
+        ref={subpageDialogRef} 
+        onClick={(e) => handleBackdropClick(e, setShowSubpageModal)}
+        style={{ maxWidth: '650px' }}
+      >
+        <div className="modal-header">
+          <span className="modal-title">{subpageContent.title}</span>
+          <button onClick={() => setShowSubpageModal(false)} className="modal-close-btn">&times;</button>
+        </div>
+        <div style={{ whiteSpace: 'pre-line', color: 'var(--color-text-muted)', lineHeight: '1.6', fontSize: '0.98rem' }}>
+          {subpageContent.text}
         </div>
       </dialog>
 

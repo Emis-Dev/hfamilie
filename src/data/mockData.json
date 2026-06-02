@@ -16,19 +16,19 @@
     },
     "hero": {
       "title": "Samen groeien, elke dag een beetje meer.",
-      "text": "Basisschool Heilige Familie is een warme plek waar elk kind zich gezien, gekend en gewaardeerd voelt. We leren met hoofd, hart en handen in een veilige omgeving vol vertrouwen.",
+      "text": "Basisschool Heilige Familie is een warme plek in Schoten waar elk kind zich gezien, gekend en gewaardeerd voelt. We leren met hoofd, hart en handen in een veilige omgeving vol vertrouwen.",
       "ctaWelcome": "Welkom in onze school",
       "ctaVideo": "Bekijk ons filmpje"
     },
     "practical": {
       "title": "Praktische info",
-      "moreInfo": "Meer praktische informatie",
+      "moreInfo": "Locatie op Google Maps",
       "hoursTitle": "Schooluren",
-      "hoursValue": "8u30 - 15u30",
-      "careTitle": "Opvang",
-      "careValue": "7u00 - 8u15\n15u30 - 18u00",
-      "addressTitle": "Adres",
-      "addressValue": "Kloosterstraat 6\n9250 Waasmunster"
+      "hoursValue": "Ma, Di, Do, Vr: 8u35 - 12u10 & 13u30 - 15u35\nWoensdag: 8u35 - 12u10 (Namiddag vrij)",
+      "careTitle": "Opvang & Huiswerk",
+      "careValue": "Voorschools: 7u15 - 8u15 (kios)\nNaschools: 15u45 - 17u45 (kios)\nHuiswerkklas (Ma, Di, Do): na de lessen",
+      "addressTitle": "Adres & Contact",
+      "addressValue": "Laaglandlei 20, 2900 Schoten\nTel: 03 658 51 95\nEmail: basisschool@hfamilie.be"
     },
     "agenda": {
       "title": "Agenda",
@@ -104,7 +104,19 @@
         "title": "Respect voor iedereen",
         "description": "Met zorg voor elkaar en onze omgeving."
       }
-    ]
+    ],
+    "subpages": {
+      "visieTitle": "Visie & Missie",
+      "visieText": "Onze school wil een warme, gastvrije en open ontmoetingsplaats zijn voor kinderen, ouders en leerkrachten. We bieden kwaliteitsvol en eigentijds onderwijs geïnspireerd door een christelijke visie.\n\nIn de Heilige Familie staan **hoofd, hart en handen** evenwichtig centraal: we stimuleren het denken (hoofd), we besteden zorg aan gevoelens en sociaal-emotionele vaardigheden (hart) en we stimuleren sport, creativiteit en praktijk (handen). We werken in dynamische leefgroepen die ervoor zorgen dat kinderen van en met elkaar leren.",
+      "historyTitle": "Historiek van de school",
+      "historyText": "Basisschool Heilige Familie werd opgericht met de wens om kleinschalig en kwalitatief onderwijs dicht bij gezinnen in Schoten te brengen. Door de decennia heen is de school uitgegroeid tot een modern en innovatief onderwijscentrum, terwijl de familiale en kleinschalige sfeer die ons kenmerkt behouden is gebleven.",
+      "pedagoTitle": "Pedagogisch Project",
+      "pedagoText": "Het pedagogisch project van de Heilige Familie is gericht op de totale ontwikkeling van de persoonlijkheid van elk kind. Wij beogen:\n• Kennisverwerving en kritisch denken\n• Zelfvertrouwen en veerkracht\n• Respect en verbondenheid met de gemeenschap\n• Duurzaamheid en zorg voor onze leefomgeving",
+      "reglementTitle": "Schoolreglement",
+      "reglementText": "Het schoolreglement bevat alle afspraken over het dagelijks leven op school, de engagementsverklaring tussen ouders en school, en de ordemaatregelen.\n\nU kunt de meest recente versie van het schoolreglement downloaden of inzien op het secretariaat. Wij verwachten dat alle ouders en leerlingen zich aan de gemaakte afspraken houden.",
+      "inschrijfTitle": "Inschrijvingen & Kijkmomenten",
+      "inschrijfText": "Wilt u uw kind inschrijven voor het lopende of komende schooljaar? U bent van harte welkom!\n\n**Aanmeldingsprocedure:**\nDe aanmeldingsprocedure verloopt digitaal via het centrale aanmeldingssysteem van de gemeente Schoten.\n\n**Kijkmomenten:**\nWe organiseren regelmatig kijkmomenten voor nieuwe ouders. Neem contact op met de directie om een afspraak te maken voor een persoonlijke rondleiding."
+    }
   },
   "en": {
     "header": {
@@ -123,19 +135,19 @@
     },
     "hero": {
       "title": "Growing together, a little more every day.",
-      "text": "Holy Family Primary School is a warm place where every child feels seen, known and valued. We learn with head, heart and hands in a safe environment full of trust.",
+      "text": "Holy Family Primary School is a warm place in Schoten where every child feels seen, known and valued. We learn with head, heart and hands in a safe environment full of trust.",
       "ctaWelcome": "Welcome to our school",
       "ctaVideo": "Watch our video"
     },
     "practical": {
       "title": "Practical Info",
-      "moreInfo": "More practical info",
+      "moreInfo": "Location on Google Maps",
       "hoursTitle": "School Hours",
-      "hoursValue": "8:30 AM - 3:30 PM",
-      "careTitle": "Childcare",
-      "careValue": "7:00 AM - 8:15 AM\n3:30 PM - 6:00 PM",
-      "addressTitle": "Address",
-      "addressValue": "Kloosterstraat 6\n9250 Waasmunster"
+      "hoursValue": "Mon, Tue, Thu, Fri: 8:35 AM - 12:10 PM & 1:30 PM - 3:35 PM\nWednesday: 8:35 AM - 12:10 PM (Afternoon free)",
+      "careTitle": "Care & Homework",
+      "careValue": "Before School: 7:15 AM - 8:15 AM (kios)\nAfter School: 3:45 PM - 5:45 PM (kios)\nHomework Class (M, T, Th): after classes",
+      "addressTitle": "Address & Contact",
+      "addressValue": "Laaglandlei 20, 2900 Schoten\nPhone: +32 (0)3 658 51 95\nEmail: basisschool@hfamilie.be"
     },
     "agenda": {
       "title": "Calendar",
@@ -211,6 +223,18 @@
         "title": "Respect for everyone",
         "description": "Caring for each other and our environment."
       }
-    ]
+    ],
+    "subpages": {
+      "visieTitle": "Vision & Mission",
+      "visieText": "Our school wants to be a warm, welcoming and open meeting place for children, parents and teachers. We offer high-quality and contemporary education inspired by a Christian vision.\n\nAt Holy Family, **head, heart and hands** are balanced in the center: we stimulate thinking (head), we pay care to feelings and social-emotional skills (heart) and we encourage sports, creativity and practice (hands). We work in dynamic age-mixed groups that ensure children learn from and with each other.",
+      "historyTitle": "School History",
+      "historyText": "Holy Family Primary School was founded with the desire to bring small-scale and quality education close to families in Schoten. Through the decades, the school has grown into a modern and innovative educational center, while maintaining the family-like and small-scale atmosphere that characterizes us.",
+      "pedagoTitle": "Pedagogical Concept",
+      "pedagoText": "The pedagogical project of the Holy Family is aimed at the total development of the personality of each child. We aim for:\n• Knowledge acquisition and critical thinking\n• Self-confidence and resilience\n• Respect and connection with the community\n• Sustainability and care for our environment",
+      "reglementTitle": "School Rules",
+      "reglementText": "The school regulations contain all agreements about daily life at school, the engagement statement between parents and school, and disciplinary measures.\n\nYou can download the most recent version of the school regulations or view them at the administration office. We expect all parents and students to comply with the agreements made.",
+      "inschrijfTitle": "Enrollment & Open Days",
+      "inschrijfText": "Would you like to enroll your child for the current or upcoming school year? You are very welcome!\n\n**Registration procedure:**\nRegistration takes place digitally via the central registration system of the municipality of Schoten.\n\n**Open Days:**\nWe regularly organize viewing moments for new parents. Contact the administration to make an appointment for a personal tour."
+    }
   }
 }
